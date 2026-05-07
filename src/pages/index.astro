@@ -11,16 +11,27 @@ const upcomingConcerts = concerts
   .slice(0, 6);
 
 const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const heroImages = [
+  '/images/presse/band-1.jpg',
+  '/images/presse/band-2.jpg', 
+  '/images/presse/band-3.jpg',
+];
 ---
 
 <BaseLayout title="NoRMAhl - Deutsche Rockband">
   <Header />
   
   <main>
-    <!-- Hero Section -->
+    <!-- Hero Section with rotating background -->
     <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="container hero-content">
+      <div class="hero-slideshow">
+        {heroImages.map((img, i) => (
+          <div class="hero-slide" data-index={i} style={`background-image: url(${img})`}></div>
+        ))}
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
         <h1 class="hero-title">NoRMAhl</h1>
         <p class="hero-subtitle">Live in Bayerland</p>
         <div class="hero-actions">
@@ -100,6 +111,27 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
 </BaseLayout>
 
 <script>
+  // Hero slideshow
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  let currentSlide = 0;
+  
+  function showNextSlide() {
+    heroSlides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === currentSlide) {
+        slide.classList.add('active');
+      }
+    });
+    currentSlide = (currentSlide + 1) % heroSlides.length;
+  }
+  
+  // Initialize first slide
+  heroSlides[0]?.classList.add('active');
+  
+  // Rotate every 5 seconds
+  setInterval(showNextSlide, 5000);
+  
+  // News tab switching
   const thumbs = document.querySelectorAll('.news-thumb');
   const panels = document.querySelectorAll('.news-panel');
   
@@ -116,7 +148,6 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
 <style>
   .hero {
     min-height: 70vh;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,23 +155,28 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
     overflow: hidden;
   }
 
-  .hero::before {
-    content: '';
+  .hero-slideshow {
     position: absolute;
     inset: 0;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(204, 0, 0, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(204, 0, 0, 0.1) 0%, transparent 40%);
   }
 
-  .hero-bg {
+  .hero-slide {
     position: absolute;
     inset: 0;
-    opacity: 0.3;
-    background-image: 
-      linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.02) 40%, transparent 60%),
-      linear-gradient(-45deg, transparent 40%, rgba(255,255,255,0.02) 40%, transparent 60%);
-    background-size: 20px 20px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(26,26,26,0.7) 50%, rgba(10,10,10,0.85) 100%);
   }
 
   .hero-content {
@@ -163,7 +199,7 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
   .hero-subtitle {
     font-size: clamp(1.25rem, 3vw, 1.75rem);
     font-weight: 300;
-    color: #888;
+    color: #aaa;
     margin-bottom: 2rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
