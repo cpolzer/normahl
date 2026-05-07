@@ -5,6 +5,7 @@
     "date": "2026-02-04",
     "excerpt": "Welch Freude, 2026 wird super gestartet - NoRMAhl zu Gast bei WIZO!",
     "content": "04.02.2026 Lindau Club Vaudeville\n05.02.2026 Ulm Roxy\n06.02.2026 Würzburg Posthalle\n07/08.02.2026 Nürnberg Löwensaal\n11.02.2026 Ingolstadt Eventhalle Westpark\n12.02.2026 München Backstage\n13.03.2026 Hamburg Große Freiheit 36\n14.03.2026 Hannover Capitol\n15.03.2026 Bremen Schlachthof\n21/22.03.2026 Berlin Astra\n05.04.2026 Stuttgart LKA\n\nZusatz Konzerte!!! Nürnberg am 8.2.26 und im Astra/Berlin am 22. März 2026.",
+    "image": "/images/news/wizo-2026.jpg",
     "links": [
       { "label": "Read more", "url": "https://youtu.be/CmyoEYzLp2o" }
     ]
@@ -15,18 +16,20 @@
     "date": "2025-04-25",
     "excerpt": "Es gibt neues auf die Ohren, die neue Single geht am 25.04.2025 raus",
     "content": "Schwäbisch Gmünd - die neue Single.",
+    "image": "/images/news/single-premiere.jpg",
     "links": [
       { "label": "Video", "url": "https://youtu.be/CmyoEYzLp2o" }
     ]
   },
   {
-    "id": "vinyl-live-bayerland",
-    "title": "Vinyl, Baby! LIVE IN BAYERLAND",
-    "date": "2019-12-13",
-    "excerpt": "Live in Bayerland ist ab 13.12.2019 als Doppel-LP in silbernem Vinyl erhältlich!",
-    "content": "NoRMAhl - Live in Bayerland. Digital erhältlich!",
+    "id": "festival-guru",
+    "title": "NoRMAhl, volles BRETT (Spiel)",
+    "date": "2024-01-01",
+    "excerpt": "Wir sind bei Festival Guru mit am Start. Wer spielen möchte, schaut vorbei!",
+    "content": "Hey Leute! Wir möchten euch mal kurz auf Festival Guru, einem Brettspiel von echten Festivalorganisatoren und Spieleentwicklern, aufmerksam machen.\nWir sind bei dem Game übrigens auch mit am Start.\nWer spielen, oder einfach nur unterstützen möchte, schaut mal bei Jungs und Mädels von Festival Guru vorbei.",
+    "image": "/images/news/festival-guru.jpg",
     "links": [
-      { "label": "Bestellen", "url": "https://punk.de/index.php?MainCat=1&SubCat=4&ProdID=12972" }
+      { "label": "Mehr Infos", "url": "http://www.festivalguru.info" }
     ]
   },
   {
@@ -34,9 +37,51 @@
     "title": "Rerelease CDU",
     "date": "2025-01-01",
     "excerpt": "Rerelease aus passendem Anlass! Ein Hoch auf unsere schwarzen Nullen.",
-    "content": "Jetzt online vorbestellen bei Spotify, Apple music, Tidal, Deezer.",
+    "content": "Rerelease aus passendem Anlass! Ein Hoch auf unsere schwarzen Nullen.\n\nJetzt online vorbestellen bei Spotify, Apple music, Tidal, Deezer.",
+    "image": "/images/news/friend-cdu.jpg",
     "links": [
       { "label": "Stream", "url": "https://ffm.to/zmjwyoe" }
     ]
+  },
+  {
+    "id": "vinyl-live-bayerland",
+    "title": "Vinyl, Baby! LIVE IN BAYERLAND",
+    "date": "2019-12-13",
+    "excerpt": "Live in Bayerland ist ab 13.12.2019 als Doppel-LP in silbernem Vinyl erhältlich!",
+    "content": "Live in Bayerland - NoRMAhl - als Doppel-LP in silbernem Vinyl erhältlich!\n\nJetzt online bestellen bei punk.de",
+    "image": "/images/news/vinyl-live-bayerland.jpg",
+    "links": [
+      { "label": "Bestellen", "url": "https://punk.de/index.php?MainCat=1&SubCat=4&ProdID=12972" }
+    ]
+  },
+  {
+    "id": "live-in-bayerland",
+    "title": "LIVE IN BAYERLAND",
+    "date": "2019-12-01",
+    "excerpt": "Live in Bayerland. Digital erhältlich!",
+    "content": "Live in Bayerland - NoRMAhl. Digital erhältlich!\n\nAmazon, iTunes, Google Play",
+    "image": "/images/news/live-in-bayerland.jpg",
+    "links": [
+      { "label": "Amazon", "url": "https://amzn.to/2zDGoKW" },
+      { "label": "iTunes", "url": "https://apple.co/2Qg1KZ2" }
+    ]
+  },
+  {
+    "id": "friede-den-huetten",
+    "title": "FRIEDE DEN HÜTTEN KRIEG DEN PALÄSTEN",
+    "date": "2015-01-01",
+    "excerpt": "Das aktuelle Studioalbum - 2015",
+    "content": "Friede den Hütten Krieg den Palästen - Das aktuelle Studioalbum - 2015\n\nErhältlich als LP, CD und per Stream.",
+    "image": "/images/news/friede-den-huetten.jpg",
+    "links": []
+  },
+  {
+    "id": "jongr-der-film",
+    "title": "JONG'R DER FILM",
+    "date": "2018-01-01",
+    "excerpt": "JONG'R - DOPPEL DPAC, Film-DVD + Soundtrack-CD",
+    "content": "JONG'R - DOPPEL DPAC, Film-DVD + Soundtrack-CD\n\nDas Doppel-Dpac zum Kinokultfilm. Inkl. 30 min Band-Feature.",
+    "image": "/images/news/jongr-der-film.jpg",
+    "links": []
   }
 ]
