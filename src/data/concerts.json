@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2026-04-10",
+    "venue": "Komma/AT-Wörgl",
+    "city": "Wörgl",
+    "ticketUrl": "https://komma.at/veranstaltung/komma-connect-2/",
+    "cancelled": false
+  },
+  {
+    "date": "2026-04-18",
+    "venue": "Countryside Calling",
+    "city": "Unterpreppach",
+    "ticketUrl": "https://www.bvd-ticket.de/produkt/countryside-calling/",
+    "cancelled": false
+  },
+  {
+    "date": "2026-05-01",
+    "venue": "Sportplatz",
+    "city": "Prölsdorf",
+    "ticketUrl": "https://www.facebook.com/krachambachfestival/?locale=de_DE",
+    "cancelled": false
+  },
+  {
+    "date": "2026-05-02",
+    "venue": "Reaktor",
+    "city": "Schongau",
+    "ticketUrl": "https://punk.de/index.php?MainCat=15&SubCat=86&ProdID=14712",
+    "cancelled": false
+  },
+  {
+    "date": "2026-05-16",
+    "venue": "Heimspiel Festival",
+    "city": "Weissenburg",
+    "ticketUrl": "https://heimspielfestival.de/",
+    "cancelled": false
+  },
+  {
+    "date": "2026-06-06",
+    "venue": "Oderbruch-Festival",
+    "city": "Seelow",
+    "ticketUrl": "https://punk.de/shop.php?MainCat=15&SubCat=87&ProdID=2262",
+    "cancelled": false
+  },
+  {
+    "date": "2026-06-27",
+    "venue": "Schnick Schnack Festival",
+    "city": "Lähde",
+    "ticketUrl": "https://www.schnickschnack-festival.de/",
+    "cancelled": false
+  },
+  {
+    "date": "2026-08-01",
+    "venue": "Kulturfestival am Schloßberg",
+    "city": "Wildenberg",
+    "ticketUrl": "https://rodschaundtom.de/products/kulturfestival-im-eigenen-land-wildenberg-1",
+    "cancelled": false
+  },
+  {
+    "date": "2026-10-16",
+    "venue": "Kulturbühne Hinterhalt",
+    "city": "Geretsried",
+    "ticketUrl": "https://punk.de/shop.php?MainCat=15&SubCat=86&ProdID=14823",
+    "cancelled": false
+  },
+  {
+    "date": "2026-10-17",
+    "venue": "Freiraum",
+    "city": "St.Pölten",
+    "ticketUrl": "https://tickets.close2fan.com/event/25-jahre-rocknroll-highschool-jubilaum",
+    "cancelled": false
+  }
+]
