@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Datenschutz - NoRMAhl">
+  <Header />
+  
+  <main class="container mx-auto px-4 py-16 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-8">Datenschutz</h1>
+    
+    <h2 class="text-xl font-bold mt-8">Datenschutz auf einen Blick</h2>
+    <p class="mt-4">
+      Diese Website verwendet keine Cookies und erhebt keine personenbezogenen Daten außer техischen Zugangsdaten, die technisch notwendig sind.
+    </p>
+    
+    <h2 class="text-xl font-bold mt-8">Kontakt</h2>
+    <p class="mt-4">
+      Bei Fragen zum Datenschutz wenden Sie sich bitte an: datenschutz@normahl.de
+    </p>
+  </main>
+
+  <Footer />
+</BaseLayout>

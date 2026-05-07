@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Impressum - NoRMAhl">
+  <Header />
+  
+  <main class="container mx-auto px-4 py-16 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-8">Impressum</h1>
+    
+    <h2 class="text-xl font-bold mt-8">Angaben gemäß § 5 TMG</h2>
+    <p class="mt-4">
+      NoRMAhl<br>
+      Heinkelstr. 3<br>
+      73663 Berglen
+    </p>
+    
+    <h2 class="text-xl font-bold mt-8">Kontakt</h2>
+    <p class="mt-4">
+      E-Mail: booking@normahl.de
+    </p>
+    
+    <h2 class="text-xl font-bold mt-8">Haftung für Inhalte</h2>
+    <p class="mt-4">
+      Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+    </p>
+  </main>
+
+  <Footer />
+</BaseLayout>

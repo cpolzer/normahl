@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import news from '../data/news.json';
+
+const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+---
+
+<BaseLayout title="News - NoRMAhl">
+  <Header />
+  
+  <main class="container mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold mb-8">NEWS</h1>
+    <div class="space-y-8">
+      {sortedNews.map(item => (
+        <article class="border-2 border-black p-4">
+          <h2 class="font-bold text-xl">{item.title}</h2>
+          <p class="text-sm text-gray-600">{new Date(item.date).toLocaleDateString('de-DE')}</p>
+          <p class="mt-4 whitespace-pre-line">{item.content || item.excerpt}</p>
+          {item.links?.map(link => (
+            <a href={link.url} class="inline-block mt-4 mr-4 bg-black text-white px-4 py-2">
+              {link.label}
+            </a>
+          ))}
+        </article>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
