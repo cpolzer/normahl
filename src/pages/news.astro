@@ -10,23 +10,116 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
 <BaseLayout title="News - NoRMAhl">
   <Header />
   
-  <main class="container mx-auto px-4 py-16">
-    <h1 class="text-3xl font-bold mb-8">NEWS</h1>
-    <div class="space-y-8">
-      {sortedNews.map(item => (
-        <article class="border-2 border-black p-4">
-          <h2 class="font-bold text-xl">{item.title}</h2>
-          <p class="text-sm text-gray-600">{new Date(item.date).toLocaleDateString('de-DE')}</p>
-          <p class="mt-4 whitespace-pre-line">{item.content || item.excerpt}</p>
-          {item.links?.map(link => (
-            <a href={link.url} class="inline-block mt-4 mr-4 bg-black text-white px-4 py-2">
-              {link.label}
-            </a>
-          ))}
-        </article>
-      ))}
+  <main class="page-content">
+    <div class="container">
+      <h1 class="page-title">News</h1>
+      
+      <div class="news-list">
+        {sortedNews.map((item) => (
+          <article class="news-item">
+            <div class="news-image">
+              <img src={item.image} alt={item.title} />
+            </div>
+            <div class="news-content">
+              <h2 class="news-title">{item.title}</h2>
+              <p class="news-date">{new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+              <p class="news-excerpt">{item.excerpt}</p>
+              <p class="news-body">{item.content}</p>
+              {item.links?.map(link => (
+                <a href={link.url} target="_blank" class="btn btn-primary">{link.label}</a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </main>
 
   <Footer />
 </BaseLayout>
+
+<style>
+  .page-content {
+    padding: 6rem 0 4rem;
+    min-height: 60vh;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .news-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid #eee;
+  }
+
+  @media (min-width: 640px) {
+    .news-item {
+      grid-template-columns: 200px 1fr;
+    }
+  }
+
+  .news-image {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 2px solid #0a0a0a;
+  }
+
+  .news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .news-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .news-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-date {
+    color: #666;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .news-excerpt {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .news-body {
+    white-space: pre-line;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: #444;
+  }
+
+  @media (max-width: 640px) {
+    .news-image {
+      max-width: 200px;
+    }
+  }
+</style>
