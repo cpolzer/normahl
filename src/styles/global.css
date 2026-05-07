@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+}
+
+html {
+  font-family: system-ui, sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}

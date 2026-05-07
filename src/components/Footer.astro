@@ -1,0 +1,29 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t-2 border-black mt-16">
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-bold">NoRMAhl</h3>
+        <p>Heinkelstr. 3</p>
+        <p>73663 Berglen</p>
+      </div>
+      <div>
+        <h3 class="font-bold">Booking</h3>
+        <p>punk.de</p>
+        <p>booking@normahl.de</p>
+      </div>
+      <div>
+        <h3 class="font-bold">Presse</h3>
+        <a href="/presse" class="hover:underline">Presse</a>
+      </div>
+    </div>
+    <div class="mt-8 pt-8 border-t border-gray-300">
+      <a href="/impressum" class="mr-4 hover:underline">Impressum</a>
+      <a href="/datenschutz" class="hover:underline">Datenschutz</a>
+      <p class="mt-2">&copy; {currentYear} NoRMAhl</p>
+    </div>
+  </div>
+</footer>

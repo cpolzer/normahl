@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  excerpt: string;
+}
+
+const { title, date, excerpt } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('de-DE', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+});
+---
+
+<article class="border-2 border-black p-4">
+  <h3 class="font-bold text-lg">{title}</h3>
+  <p class="text-sm text-gray-600">{formattedDate}</p>
+  <p class="mt-2">{excerpt}</p>
+</article>
