@@ -1,2 +1,18 @@
 [tools]
 node = "20"
+
+[tasks.dev]
+description = "Start development server"
+run = "npm run dev"
+
+[tasks.build]
+description = "Build static site"
+run = "npm run build"
+
+[tasks.preview]
+description = "Preview built site"
+run = "npm run preview"
+
+[tasks.check]
+description = "Type-check the project"
+run = "npm run check"
