@@ -95,38 +95,42 @@ import Footer from '../components/Footer.astro';
       <section id="druck" class="press-section">
         <h2 class="press-section-title">Druckvorlagen</h2>
         
-        <div class="press-downloads">
-          <div class="press-download">
+        <div class="press-gallery">
+          <div class="press-image">
+            <img src="/images/presse/logo_normahl_adler.jpg" alt="Logo Adler" />
             <h4>Logo Adler</h4>
             <p>23cm x 21,5cm 300dpi jpg-File</p>
             <a href="/images/presse/logo_normahl_adler.jpg" download class="btn btn-outline">Herunterladen</a>
           </div>
           
-          <div class="press-download">
+          <div class="press-image">
+            <img src="/images/presse/grafiker/Normahl_Adler_1c_neg.jpg" alt="Logo Adler invertiert" />
             <h4>Logo Adler invertiert</h4>
             <p>jpg-File</p>
             <a href="/images/presse/grafiker/Normahl_Adler_1c_neg.jpg" download class="btn btn-outline">Herunterladen</a>
           </div>
           
-          <div class="press-download">
+          <div class="press-image">
+            <img src="/images/presse/HB19_Normahl_Poster_A1+3mm.jpg" alt="Plakat Normahl 2020" />
             <h4>Plakat Normahl 2020</h4>
-            <p>5906 x 8337px - 22mb jpg-File</p>
+            <p>5906 x 8337px - 22mb</p>
             <a href="/images/presse/HB19_Normahl_Poster_A1+3mm.jpg" download class="btn btn-outline">Herunterladen</a>
           </div>
           
-          <div class="press-download">
+          <div class="press-image">
+            <img src="/images/presse/grafiker/Normahl_Adler_Schriftzug.jpg" alt="Logo Adler mit Schrift" />
             <h4>Logo Adler mit Schrift</h4>
             <p>JPEG</p>
             <a href="/images/presse/grafiker/Normahl_Adler_Schriftzug.jpg" download class="btn btn-outline">Herunterladen</a>
           </div>
           
-          <div class="press-download">
+          <div class="press-image no-preview">
             <h4>Schriftzug Normahl</h4>
             <p>PDF-File</p>
             <a href="/images/presse/grafiker/Normahl_Schriftzug.pdf" download class="btn btn-outline">Herunterladen</a>
           </div>
           
-          <div class="press-download">
+          <div class="press-image no-preview">
             <h4>Normahl Logo Schrift</h4>
             <p>SVG</p>
             <a href="/images/logo-normahl-weiss.svg" download class="btn btn-outline">Herunterladen</a>
@@ -248,27 +252,14 @@ import Footer from '../components/Footer.astro';
     margin: 0.5rem 0;
   }
 
-  .press-downloads {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
+  .press-image.no-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .press-download {
-    border: 2px solid #0a0a0a;
-    padding: 1.5rem;
-  }
-
-  .press-download h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .press-download p {
-    font-size: 0.875rem;
-    color: #666;
-    margin-bottom: 1rem;
+.press-image.no-preview img {
+    display: none;
   }
 
   @media (max-width: 640px) {
