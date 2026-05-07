@@ -2,60 +2,322 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ConcertCard from '../components/ConcertCard.astro';
-import NewsCard from '../components/NewsCard.astro';
 import concerts from '../data/concerts.json';
 import news from '../data/news.json';
 
-const sortedConcerts = concerts
+const upcomingConcerts = concerts
   .filter(c => !c.cancelled && new Date(c.date) >= new Date())
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  .slice(0, 5);
+  .slice(0, 6);
 
 const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const latestNews = sortedNews[0];
 ---
 
-<BaseLayout title="NoRMAhl">
+<BaseLayout title="NoRMAhl - Deutsche Rockband">
   <Header />
   
   <main>
-    <section class="bg-black text-white py-16">
-      <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl font-bold mb-4">NoRMAhl</h1>
-        <p class="text-xl">Live in Bayerland</p>
-        <a href="https://www.amazon.de/Live-Bayerland-Jahre-Diesel-Bier/dp/B07L19C25K" class="inline-block mt-4 bg-white text-black px-4 py-2">
-          Kaufen
-        </a>
-        <a href="https://open.spotify.com/album/42CUl09G2oeiWsw7IPnlWU" class="inline-block mt-4 ml-4 bg-white text-black px-4 py-2">
-          Streamen
-        </a>
-        <a href="https://youtu.be/03dsocprW4Y" class="inline-block mt-4 ml-4 bg-white text-black px-4 py-2">
-          Video
-        </a>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="container hero-content">
+        <h1 class="hero-title text-white">NoRMAhl</h1>
+        <p class="hero-subtitle">Live in Bayerland</p>
+        <div class="hero-actions">
+          <a href="https://www.amazon.de/Live-Bayerland-Jahre-Diesel-Bier/dp/B07L19C25K" target="_blank" class="btn btn-primary">Kaufen</a>
+          <a href="https://open.spotify.com/album/42CUl09G2oeiWsw7IPnlWU" target="_blank" class="btn btn-primary">Streamen</a>
+          <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-outline">Video</a>
+        </div>
       </div>
     </section>
 
-    <section id="konzerte" class="container mx-auto px-4 py-16">
-      <h2 class="text-2xl font-bold mb-8">KONZERTE</h2>
-      <div class="grid gap-4">
-        {sortedConcerts.map((concert) => (
-          <ConcertCard {...concert} />
-        ))}
-      </div>
-      <div class="mt-8 text-center">
-        <a href="/konzerte" class="bg-black text-white px-4 py-2">Alle Konzerte</a>
+    <!-- Konzerte Section -->
+    <section id="konzerte" class="section">
+      <div class="container">
+        <h2 class="section-title">KONZERTE</h2>
+        <div class="divider"></div>
+        
+        <div class="concerts-grid">
+          {upcomingConcerts.map((concert) => (
+            <a href={concert.ticketUrl} target="_blank" class="concert-card">
+              <span class="concert-date">{new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+              <span class="concert-venue">{concert.venue}</span>
+              <span class="concert-city">{concert.city}</span>
+            </a>
+          ))}
+        </div>
+        
+        <div class="text-center mt-8">
+          <a href="/konzerte" class="btn btn-outline">Alle Konzerte</a>
+        </div>
       </div>
     </section>
 
-    <section class="container mx-auto px-4 py-16">
-      <h2 class="text-2xl font-bold mb-8">NEWS</h2>
-      <div class="grid gap-4 md:grid-cols-2">
-        {sortedNews.slice(0, 4).map((item) => (
-          <NewsCard title={item.title} date={item.date} excerpt={item.excerpt} />
-        ))}
+    <!-- News Section -->
+    <section class="section section-gray">
+      <div class="container">
+        <h2 class="section-title">NEU</h2>
+        <div class="divider"></div>
+        
+        <div class="news-tabs">
+          <nav class="news-thumbnav">
+            {sortedNews.map((item, index) => (
+              <button 
+                class:list={['news-thumb', { active: index === 0 }]} 
+                data-index={index}
+                aria-label={item.title}
+              >
+                <span class="news-thumb-label">{item.title.slice(0, 15)}...</span>
+              </button>
+            ))}
+          </nav>
+          
+          <div class="news-content">
+            {sortedNews.map((item, index) => (
+              <div class:list={['news-panel', { active: index === 0 }]} data-index={index}>
+                <div class="news-panel-inner">
+                  <div class="news-text">
+                    <h3 class="news-title">{item.title}</h3>
+                    <p class="news-date">{new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+                    <p class="news-body">{item.content || item.excerpt}</p>
+                    {item.links?.map(link => (
+                      <a href={link.url} target="_blank" class="btn btn-primary">{link.label}</a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <Footer />
 </BaseLayout>
+
+<script>
+  // Simple tab switching
+  const thumbs = document.querySelectorAll('.news-thumb');
+  const panels = document.querySelectorAll('.news-panel');
+  
+  thumbs.forEach((thumb, i) => {
+    thumb.addEventListener('click', () => {
+      thumbs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      thumb.classList.add('active');
+      document.querySelector(`[data-index="${i}"]`)?.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    min-height: 70vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(204, 0, 0, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(204, 0, 0, 0.1) 0%, transparent 40%);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    background-image: 
+      linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.02) 40%, transparent 60%),
+      linear-gradient(-45deg, transparent 40%, rgba(255,255,255,0.02) 40%, transparent 60%);
+    background-size: 20px 20px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 12vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 300;
+    color: #888;
+    margin-bottom: 2rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .concerts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .concert-card {
+    display: block;
+    border: 2px solid #0a0a0a;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .concert-card:hover {
+    background: #0a0a0a;
+    color: #fff;
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0 #cc0000;
+  }
+
+  .concert-date {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .concert-venue {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  .concert-city {
+    display: block;
+    color: #666;
+    font-size: 0.875rem;
+  }
+
+  .section-gray {
+    background: #f9f9f9;
+  }
+
+  .news-tabs {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .news-thumbnav {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .news-thumb {
+    width: 70px;
+    height: 70px;
+    border: 2px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 0.625rem;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .news-thumb:hover {
+    border-color: #0a0a0a;
+  }
+
+  .news-thumb.active {
+    border-color: #0a0a0a;
+    background: #0a0a0a;
+    color: #fff;
+  }
+
+  .news-thumb-label {
+    line-height: 1.2;
+  }
+
+  .news-panel {
+    display: none;
+  }
+
+  .news-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .news-panel-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .news-panel-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .news-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .news-date {
+    color: #666;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .news-body {
+    margin-bottom: 1.5rem;
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      min-height: 60vh;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+</style>

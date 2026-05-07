@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ConcertCard from '../components/ConcertCard.astro';
 import concerts from '../data/concerts.json';
 
 const sortedConcerts = concerts
@@ -12,14 +11,144 @@ const sortedConcerts = concerts
 <BaseLayout title="Konzerte - NoRMAhl">
   <Header />
   
-  <main class="container mx-auto px-4 py-16">
-    <h1 class="text-3xl font-bold mb-8">KONZERTE</h1>
-    <div class="grid gap-4">
-      {sortedConcerts.map(concert => (
-        <ConcertCard {...concert} />
-      ))}
+  <main class="page-content">
+    <div class="container">
+      <h1 class="page-title">KONZERTE</h1>
+      
+      <div class="concerts-list">
+        {sortedConcerts.map(concert => (
+          <a 
+            href={concert.ticketUrl} 
+            target="_blank" 
+            class:list={['concert-row', { cancelled: concert.cancelled }]}
+          >
+            <span class="concert-date">
+              {new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            </span>
+            <span class="concert-venue">{concert.venue}</span>
+            <span class="concert-city">{concert.city}</span>
+            {concert.cancelled ? (
+              <span class="concert-status cancelled">Ausgefallen</span>
+            ) : (
+              <span class="concert-status">Tickets &rarr;</span>
+            )}
+          </a>
+        ))}
+      </div>
     </div>
   </main>
 
   <Footer />
 </BaseLayout>
+
+<style>
+  .page-content {
+    padding: 6rem 0 4rem;
+    min-height: 60vh;
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .concerts-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .concert-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border: 2px solid #0a0a0a;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+  }
+
+  .concert-row:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .concert-row:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .concert-row:hover {
+    background: #0a0a0a;
+    color: #fff;
+  }
+
+  .concert-row:hover .concert-status {
+    color: #cc0000;
+  }
+
+  .concert-row.cancelled {
+    opacity: 0.5;
+  }
+
+  .concert-row.cancelled:hover {
+    background: #f5f5f5;
+    color: #0a0a0a;
+  }
+
+  .concert-date {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .concert-venue {
+    font-weight: 500;
+  }
+
+  .concert-city {
+    color: #666;
+    text-align: right;
+  }
+
+  .concert-status {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .concert-status.cancelled {
+    color: #cc0000;
+  }
+
+  @media (max-width: 640px) {
+    .concert-row {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .concert-date {
+      grid-column: 1;
+    }
+
+    .concert-status {
+      grid-column: 2;
+      grid-row: 1;
+      text-align: right;
+    }
+
+    .concert-venue {
+      grid-column: 1 / -1;
+    }
+
+    .concert-city {
+      grid-column: 1 / -1;
+      text-align: left;
+    }
+  }
+</style>
