@@ -68,5 +68,68 @@
     "city": "St.Pölten",
     "ticketUrl": "https://tickets.close2fan.com/event/25-jahre-rocknroll-highschool-jubilaum",
     "cancelled": false
+  },
+  {
+    "date": "2026-11-21",
+    "venue": "JENA - F-Haus",
+    "city": "JENA",
+    "ticketUrl": "https://punk.de/index.php?MainCat=15&SubCat=87&ProdID=2174",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "NoRMAhl in JENA - F-Haus"
+  },
+  {
+    "date": "2026-12-12",
+    "venue": "Belinda Benefitz",
+    "city": "Sulzbach",
+    "ticketUrl": "https://www.belinda-discothek.de/kultur-im-kessel-programm",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Belinda Benefitz"
+  },
+  {
+    "date": "2026-12-25",
+    "venue": "Weihnachtspogo",
+    "city": "Chemnitz",
+    "ticketUrl": "https://www.ajz-chemnitz.de/event-detail/weihnachtspogo-nr-32.html",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Weihnachtspogo Chemnitz"
+  },
+  {
+    "date": "2027-06-19",
+    "venue": "Meinheim Open",
+    "city": "91802",
+    "ticketUrl": "https://hummelhausmeinheim.de/",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Normahl in 91802 Meinheim Open-Air"
+  },
+  {
+    "date": "2027-06-26",
+    "venue": "Tank in Naumbuerg",
+    "city": "Naumbuerg",
+    "ticketUrl": "https://www.tank-naumburg.de/index.html",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Normahl Tank in Naumbuerg Open-Air"
+  },
+  {
+    "date": "2027-07-31",
+    "venue": "Waschhaus Potsdam",
+    "city": "Potsdam",
+    "ticketUrl": "https://punk.de/index.php?MainCat=15&SubCat=86&ProdID=14908",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Normahl mit Wizo und Slime in Potsdam"
+  },
+  {
+    "date": "2027-10-08",
+    "venue": "Halle",
+    "city": "Reichenbach",
+    "ticketUrl": "https://diehalle.de/",
+    "cancelled": false,
+    "_source": "calendar",
+    "_summary": "Normahl in Reichenbach: Halle"
   }
 ]

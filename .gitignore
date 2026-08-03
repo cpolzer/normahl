@@ -6,3 +6,4 @@ dist/
 
 resources/
 .playwright-mcp/
+scripts/fetch-calendar.mjs

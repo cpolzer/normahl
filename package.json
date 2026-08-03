@@ -2,7 +2,7 @@
   "name": "normahl-website",
   "type": "module",
   "version": "1.0.0",
-"scripts": {
+  "scripts": {
     "dev": "astro dev",
     "build": "node scripts/generate-thumbnails.mjs && astro build",
     "preview": "astro preview",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
-    "astro": "^5.0.0"
+    "astro": "^7.1.6"
   },
   "devDependencies": {
     "sharp": "^0.34.5"
