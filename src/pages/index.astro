@@ -6,7 +6,7 @@ import concerts from '../data/concerts.json';
 import news from '../data/news.json';
 
 const upcomingConcerts = concerts
-  .filter(c => !c.cancelled && new Date(c.date) >= new Date())
+  .filter(c => !c.cancelled && !c.tbc && !/tbc/i.test(`${c.venue} ${c.city}`) && new Date(c.date) >= new Date())
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   .slice(0, 6);
 

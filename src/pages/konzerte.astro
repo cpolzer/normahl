@@ -5,13 +5,14 @@ import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
 
 const now = new Date();
+const isTbc = (c: any) => c.tbc || /tbc/i.test(`${c.venue} ${c.city}`);
 
 const upcoming = concerts
-  .filter(c => new Date(c.date) >= now)
+  .filter(c => !isTbc(c) && new Date(c.date) >= now)
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 const past = concerts
-  .filter(c => new Date(c.date) < now)
+  .filter(c => !isTbc(c) && new Date(c.date) < now)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 const pastByYear: Record<string, typeof past> = {};
