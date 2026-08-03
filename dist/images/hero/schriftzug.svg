@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="100" viewBox="0 0 400 100">
-  <style>
-    .text { font-family: 'Arial Black', 'Helvetica Neue', sans-serif; font-weight: 900; }
-  </style>
-  <text x="200" y="65" text-anchor="middle" class="text" font-size="48" fill="#000000">NoRMAhl</text>
-</svg>
