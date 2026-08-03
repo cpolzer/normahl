@@ -12,10 +12,11 @@ const upcomingConcerts = concerts
 
 const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+const base = import.meta.env.BASE_URL;
 const heroImages = [
-  '/images/hero/hero-1.jpg',
-  '/images/hero/hero-2.jpg', 
-  '/images/hero/hero-3.jpg',
+  `${base}images/hero/hero-1.jpg`,
+  `${base}images/hero/hero-2.jpg`,
+  `${base}images/hero/hero-3.jpg`,
 ];
 ---
 
@@ -32,7 +33,7 @@ const heroImages = [
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <h1 class="hero-title"><img src="/images/hero/normahl-schrift.svg" alt="NoRMAhl" class="hero-logo" /></h1>
+        <h1 class="hero-title"><img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="hero-logo" /></h1>
         <p class="hero-subtitle">Live in Bayerland</p>
         <div class="hero-actions">
           <a href="https://www.amazon.de/Live-Bayerland-Jahre-Diesel-Bier/dp/B07L19C25K" target="_blank" class="btn btn-primary">Kaufen</a>
@@ -78,7 +79,7 @@ const heroImages = [
                 data-index={index}
                 aria-label={item.title}
               >
-                <img src={item.image} alt={item.title} class="news-thumb-img" />
+                <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} class="news-thumb-img" />
               </button>
             ))}
           </nav>
@@ -88,7 +89,7 @@ const heroImages = [
               <div class:list={['news-panel', { active: index === 0 }]} data-index={index}>
                 <div class="news-panel-inner">
                   <div class="news-image">
-                    <img src={item.image} alt={item.title} />
+                    <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} />
                   </div>
                   <div class="news-text">
                     <h3 class="news-title">{item.title}</h3>
