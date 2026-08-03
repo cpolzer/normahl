@@ -1,5 +1,6 @@
 ---
 const currentYear = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="site-footer">
@@ -19,7 +20,7 @@ const currentYear = new Date().getFullYear();
       
       <div class="footer-col">
         <h3 class="footer-title">Presse</h3>
-        <p><a href="/presse">Presse</a></p>
+        <p><a href={`${base}presse`}>Presse</a></p>
         <p>presse@normahl.de</p>
       </div>
       
@@ -37,8 +38,8 @@ const currentYear = new Date().getFullYear();
     </div>
     
     <div class="footer-bottom">
-      <a href="/impressum" class="footer-link">Impressum</a>
-      <a href="/datenschutz" class="footer-link">Datenschutz</a>
+      <a href={`${base}impressum`} class="footer-link">Impressum</a>
+      <a href={`${base}datenschutz`} class="footer-link">Datenschutz</a>
       <p class="copyright">&copy; {currentYear} NoRMAhl</p>
     </div>
   </div>

@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "NoRMAhl" [ref=e5]
+      - navigation [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Startseite" [ref=e9] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e10]:
+            - link "Konzerte" [ref=e11] [cursor=pointer]:
+              - /url: /konzerte
+          - listitem [ref=e12]:
+            - link "News" [ref=e13] [cursor=pointer]:
+              - /url: /news
+          - listitem [ref=e14]:
+            - link "Presse" [ref=e15] [cursor=pointer]:
+              - /url: /presse
+  - main [ref=e16]:
+    - generic [ref=e23]:
+      - heading [level=1] [ref=e24]:
+        - img "NoRMAhl" [ref=e25]
+      - paragraph [ref=e26]: Live in Bayerland
+      - generic [ref=e27]:
+        - link "Kaufen" [ref=e28] [cursor=pointer]:
+          - /url: https://www.amazon.de/Live-Bayerland-Jahre-Diesel-Bier/dp/B07L19C25K
+        - link "Streamen" [ref=e29] [cursor=pointer]:
+          - /url: https://open.spotify.com/album/42CUl09G2oeiWsw7IPnlWU
+        - link "Video" [ref=e30] [cursor=pointer]:
+          - /url: https://youtu.be/03dsocprW4Y
+    - generic [ref=e32]:
+      - heading "KONZERTE" [level=2] [ref=e33]
+      - generic [ref=e35]:
+        - link "16.10.2026 Kulturbühne Hinterhalt Geretsried" [ref=e36] [cursor=pointer]:
+          - /url: https://punk.de/shop.php?MainCat=15&SubCat=86&ProdID=14823
+          - generic [ref=e37]: 16.10.2026
+          - generic [ref=e38]: Kulturbühne Hinterhalt
+          - generic [ref=e39]: Geretsried
+        - link "17.10.2026 Freiraum St.Pölten" [ref=e40] [cursor=pointer]:
+          - /url: https://tickets.close2fan.com/event/25-jahre-rocknroll-highschool-jubilaum
+          - generic [ref=e41]: 17.10.2026
+          - generic [ref=e42]: Freiraum
+          - generic [ref=e43]: St.Pölten
+      - link "Alle Konzerte" [ref=e45] [cursor=pointer]:
+        - /url: /konzerte
+    - generic [ref=e47]:
+      - heading "NEU" [level=2] [ref=e48]
+      - generic [ref=e50]:
+        - navigation [ref=e51]:
+          - button "NoRMAhl sieht das Licht mit WIZO 2026" [ref=e52] [cursor=pointer]:
+            - img "NoRMAhl sieht das Licht mit WIZO 2026" [ref=e53]
+          - button "Single Premiere - Schwäbisch Gmünd" [ref=e54] [cursor=pointer]:
+            - img "Single Premiere - Schwäbisch Gmünd" [ref=e55]
+          - button "Rerelease CDU" [ref=e56] [cursor=pointer]:
+            - img "Rerelease CDU" [ref=e57]
+          - button "NoRMAhl, volles BRETT (Spiel)" [ref=e58] [cursor=pointer]:
+            - img "NoRMAhl, volles BRETT (Spiel)" [ref=e59]
+          - button "Vinyl, Baby! LIVE IN BAYERLAND" [ref=e60] [cursor=pointer]:
+            - img "Vinyl, Baby! LIVE IN BAYERLAND" [ref=e61]
+          - button "LIVE IN BAYERLAND" [ref=e62] [cursor=pointer]:
+            - img "LIVE IN BAYERLAND" [ref=e63]
+          - button "JONG'R DER FILM" [ref=e64] [cursor=pointer]:
+            - img "JONG'R DER FILM" [ref=e65]
+          - button "FRIEDE DEN HÜTTEN KRIEG DEN PALÄSTEN" [ref=e66] [cursor=pointer]:
+            - img "FRIEDE DEN HÜTTEN KRIEG DEN PALÄSTEN" [ref=e67]
+        - generic [ref=e70]:
+          - img "NoRMAhl sieht das Licht mit WIZO 2026" [ref=e72]
+          - generic [ref=e73]:
+            - heading "NoRMAhl sieht das Licht mit WIZO 2026" [level=3] [ref=e74]
+            - paragraph [ref=e75]: 04.02.2026
+            - paragraph [ref=e76]: 04.02.2026 Lindau Club Vaudeville 05.02.2026 Ulm Roxy 06.02.2026 Würzburg Posthalle 07/08.02.2026 Nürnberg Löwensaal 11.02.2026 Ingolstadt Eventhalle Westpark 12.02.2026 München Backstage 13.03.2026 Hamburg Große Freiheit 36 14.03.2026 Hannover Capitol 15.03.2026 Bremen Schlachthof 21/22.03.2026 Berlin Astra 05.04.2026 Stuttgart LKA Zusatz Konzerte!!! Nürnberg am 8.2.26 und im Astra/Berlin am 22. März 2026.
+            - link "Read more" [ref=e77] [cursor=pointer]:
+              - /url: https://youtu.be/CmyoEYzLp2o
+  - contentinfo [ref=e78]:
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - heading "NoRMAhl" [level=3] [ref=e82]
+          - paragraph [ref=e83]: Heinkelstr. 3
+          - paragraph [ref=e84]: 73663 Berglen
+        - generic [ref=e85]:
+          - heading "Booking" [level=3] [ref=e86]
+          - paragraph [ref=e87]:
+            - link "punk.de" [ref=e88] [cursor=pointer]:
+              - /url: https://punk.de
+          - paragraph [ref=e89]: booking@normahl.de
+        - generic [ref=e90]:
+          - heading "Presse" [level=3] [ref=e91]
+          - paragraph [ref=e92]:
+            - link "Presse" [ref=e93] [cursor=pointer]:
+              - /url: /presse
+          - paragraph [ref=e94]: presse@normahl.de
+        - generic [ref=e95]:
+          - link "Facebook" [ref=e96] [cursor=pointer]:
+            - /url: https://de-de.facebook.com/pages/category/Performing-Arts/NoRMAhl-253854581323142/
+          - link "YouTube" [ref=e99] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UCrgloYUqroSFUnL98yPb5qA
+          - link "Spotify" [ref=e102] [cursor=pointer]:
+            - /url: https://open.spotify.com/artist/4A3ZGNdTWn4w4Aw6VFqoJm
+      - generic [ref=e105]:
+        - link "Impressum" [ref=e106] [cursor=pointer]:
+          - /url: /impressum
+        - link "Datenschutz" [ref=e107] [cursor=pointer]:
+          - /url: /datenschutz
+        - paragraph [ref=e108]: © 2026 NoRMAhl
