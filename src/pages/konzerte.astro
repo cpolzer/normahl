@@ -5,42 +5,113 @@ import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
 
 const now = new Date();
-const sortedConcerts = concerts
+
+const upcoming = concerts
+  .filter(c => new Date(c.date) >= now)
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+const past = concerts
+  .filter(c => new Date(c.date) < now)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const pastByYear: Record<string, typeof past> = {};
+for (const c of past) {
+  const year = c.date.slice(0, 4);
+  if (!pastByYear[year]) pastByYear[year] = [];
+  pastByYear[year].push(c);
+}
+const pastYears = Object.keys(pastByYear).sort((a, b) => Number(b) - Number(a));
 ---
 
 <BaseLayout title="Konzerte - NoRMAhl">
   <Header />
-  
+
   <main class="page-content">
     <div class="container">
       <h1 class="page-title">KONZERTE</h1>
-      
-      <div class="concerts-list">
-        {sortedConcerts.map(concert => (
-          <a 
-            href={concert.ticketUrl} 
-            target="_blank" 
-            class:list={['concert-row', { cancelled: concert.cancelled, past: new Date(concert.date) < now }]}
-          >
-            <span class="concert-date">
-              {new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-            </span>
-            <span class="concert-venue">{concert.venue}</span>
-            <span class="concert-city">{concert.city}</span>
-            {concert.cancelled ? (
-              <span class="concert-status cancelled">Ausgefallen</span>
-            ) : (
-              <span class="concert-status">Tickets &rarr;</span>
-            )}
-          </a>
-        ))}
-      </div>
+
+      {upcoming.length > 0 && (
+        <section class="concert-section">
+          <h2 class="section-label">Kommende Konzerte</h2>
+          <div class="concerts-list">
+            {upcoming.map(concert => (
+              <a
+                href={concert.ticketUrl}
+                target="_blank"
+                class:list={['concert-row', { cancelled: concert.cancelled }]}
+              >
+                <span class="concert-date">
+                  {new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                </span>
+                <span class="concert-venue">{concert.venue}</span>
+                <span class="concert-city">{concert.city}</span>
+                {concert.cancelled ? (
+                  <span class="concert-status cancelled">Ausgefallen</span>
+                ) : (
+                  <span class="concert-status">Tickets &rarr;</span>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {pastYears.length > 0 && (
+        <section class="concert-section past-section">
+          <h2 class="section-label">Vergangene Konzerte</h2>
+
+          <nav class="year-nav">
+            {pastYears.map((year, i) => (
+              <button class:list={['year-btn', { active: i === 0 }]} data-year={year}>
+                {year}
+              </button>
+            ))}
+          </nav>
+
+          {pastYears.map((year, i) => (
+            <div class:list={['year-group', { active: i === 0 }]} data-year={year}>
+              <div class="concerts-list">
+                {pastByYear[year].map(concert => (
+                  <a
+                    href={concert.ticketUrl}
+                    target="_blank"
+                    class:list={['concert-row', 'past', { cancelled: concert.cancelled }]}
+                  >
+                    <span class="concert-date">
+                      {new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    </span>
+                    <span class="concert-venue">{concert.venue}</span>
+                    <span class="concert-city">{concert.city}</span>
+                    {concert.cancelled ? (
+                      <span class="concert-status cancelled">Ausgefallen</span>
+                    ) : (
+                      <span class="concert-status">&mdash;</span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
     </div>
   </main>
 
   <Footer />
 </BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.year-btn');
+  const groups = document.querySelectorAll<HTMLElement>('.year-group');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const year = btn.dataset.year;
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      groups.forEach(g => g.classList.toggle('active', g.dataset.year === year));
+    });
+  });
+</script>
 
 <style>
   .page-content {
@@ -57,9 +128,60 @@ const sortedConcerts = concerts
     text-transform: uppercase;
   }
 
-  .concerts-list {
+  .concert-section {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 3rem;
+  }
+
+  .section-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .year-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .year-btn {
+    padding: 0.4rem 1rem;
+    border: 2px solid #ccc;
+    background: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    color: #888;
+  }
+
+  .year-btn:hover {
+    border-color: #0a0a0a;
+    color: #0a0a0a;
+  }
+
+  .year-btn.active {
+    border-color: #0a0a0a;
+    background: #0a0a0a;
+    color: #fff;
+  }
+
+  .year-group {
+    display: none;
+  }
+
+  .year-group.active {
+    display: block;
+  }
+
+  .concerts-list {
+    display: flex;
+    flex-direction: column;
   }
 
   .concert-row {
@@ -71,16 +193,6 @@ const sortedConcerts = concerts
     border: 2px solid #0a0a0a;
     margin-bottom: -2px;
     transition: all 0.2s ease;
-  }
-
-  .concert-row:first-child {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  .concert-row:last-child {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
 
   .concert-row:hover {
@@ -102,14 +214,14 @@ const sortedConcerts = concerts
   }
 
   .concert-row.past {
-    opacity: 0.4;
-    color: #888;
+    opacity: 0.45;
     border-color: #ccc;
   }
 
   .concert-row.past:hover {
     background: #f5f5f5;
-    color: #888;
+    color: #0a0a0a;
+    opacity: 0.7;
   }
 
   .concert-date {
