@@ -4,8 +4,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
 
+const now = new Date();
 const sortedConcerts = concerts
-  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
 <BaseLayout title="Konzerte - NoRMAhl">
@@ -20,7 +21,7 @@ const sortedConcerts = concerts
           <a 
             href={concert.ticketUrl} 
             target="_blank" 
-            class:list={['concert-row', { cancelled: concert.cancelled }]}
+            class:list={['concert-row', { cancelled: concert.cancelled, past: new Date(concert.date) < now }]}
           >
             <span class="concert-date">
               {new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
@@ -98,6 +99,17 @@ const sortedConcerts = concerts
   .concert-row.cancelled:hover {
     background: #f5f5f5;
     color: #0a0a0a;
+  }
+
+  .concert-row.past {
+    opacity: 0.4;
+    color: #888;
+    border-color: #ccc;
+  }
+
+  .concert-row.past:hover {
+    background: #f5f5f5;
+    color: #888;
   }
 
   .concert-date {
