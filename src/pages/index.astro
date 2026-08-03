@@ -115,6 +115,10 @@ const heroImages = [
     <span class="config-label">Preview</span>
     <button id="toggle-adler" class="config-btn">Adler: AN</button>
     <button id="toggle-hero-content" class="config-btn">Hero-Inhalt: AN</button>
+    <span class="config-label">Farbe</span>
+    <button class="config-btn color-btn" data-color="white">Weiß</button>
+    <button class="config-btn color-btn" data-color="red">Rot</button>
+    <button class="config-btn color-btn" data-color="grey">Grau</button>
   </div>
 </BaseLayout>
 
@@ -139,6 +143,26 @@ const heroImages = [
     toggleHero.textContent = `Hero-Inhalt: ${heroOn ? 'AN' : 'AUS'}`;
     toggleHero.classList.toggle('off', !heroOn);
   }
+
+  // Color theme
+  const hero = document.querySelector('.hero') as HTMLElement | null;
+  const colorBtns = document.querySelectorAll<HTMLButtonElement>('.color-btn');
+  let currentColor = localStorage.getItem('cfg_color') || 'white';
+
+  function applyColor(color: string) {
+    if (hero) hero.setAttribute('data-color', color);
+    colorBtns.forEach(b => b.classList.toggle('active-color', b.dataset.color === color));
+  }
+
+  applyColor(currentColor);
+
+  colorBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentColor = btn.dataset.color!;
+      localStorage.setItem('cfg_color', currentColor);
+      applyColor(currentColor);
+    });
+  });
 
   applyAdler();
   applyHero();
@@ -254,7 +278,6 @@ const heroImages = [
     max-height: 200px;
     display: block;
     margin: 0 auto;
-    filter: invert(1);
   }
 
   .hero-subtitle {
@@ -435,6 +458,17 @@ const heroImages = [
 
   .adler-hidden::before { display: none; }
   .hero-hidden { opacity: 0; pointer-events: none; }
+
+  /* white (default) */
+  .hero[data-color="white"] .hero-logo { filter: invert(1); }
+
+  /* red */
+  .hero[data-color="red"] .hero-logo { filter: brightness(0) saturate(100%) invert(13%) sepia(99%) saturate(7471%) hue-rotate(3deg) brightness(95%) contrast(114%); }
+
+  /* grey */
+  .hero[data-color="grey"] .hero-logo { filter: invert(1) grayscale(1) brightness(0.75); }
+
+  .config-btn.active-color { border-color: #fff; color: #fff; }
 
   #config-bar {
     position: fixed;
