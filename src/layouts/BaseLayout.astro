@@ -1,4 +1,6 @@
 ---
+import AuthGuard from '../components/AuthGuard.astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -18,6 +20,7 @@ const { title, description = "NoRMAhl - Deutsche Rockband" } = Astro.props;
   <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}images/favicon.svg`}>
 </head>
 <body>
+  <AuthGuard />
   <slot />
 </body>
 </html>

@@ -1,0 +1,9 @@
+---
+const base = import.meta.env.BASE_URL;
+const passwordHash = import.meta.env.PUBLIC_PASSWORD_HASH;
+---
+<script define:vars={{ passwordHash, base }}>
+  if (passwordHash && sessionStorage.getItem('normahl_auth') !== passwordHash) {
+    location.replace(`${base}login`);
+  }
+</script>

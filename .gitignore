@@ -7,3 +7,5 @@ dist/
 resources/
 .playwright-mcp/
 scripts/fetch-calendar.mjs
+.env
+.env.local

@@ -1,0 +1,155 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoRMAhl – Login</title>
+  <link rel="icon" type="image/svg+xml" href={`${base}images/favicon.svg`}>
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <img src={`${base}images/hero/hero-1.jpg`} alt="" />
+  </div>
+
+  <div class="overlay" aria-hidden="true"></div>
+
+  <div class="login-box">
+    <img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="logo" />
+    <form id="login-form">
+      <input
+        type="password"
+        id="password"
+        placeholder="Passwort"
+        autocomplete="current-password"
+        autofocus
+      />
+      <button type="submit">Einloggen</button>
+      <p id="error" class="error" hidden>Falsches Passwort</p>
+    </form>
+  </div>
+</body>
+</html>
+
+<script define:vars={{ passwordHash: import.meta.env.PUBLIC_PASSWORD_HASH, base: import.meta.env.BASE_URL }}>
+  // If already authenticated, skip login
+  if (sessionStorage.getItem('normahl_auth') === passwordHash) {
+    location.replace(base);
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pw = document.getElementById('password').value;
+    const hash = Array.from(
+      new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw)))
+    ).map(b => b.toString(16).padStart(2, '0')).join('');
+
+    if (hash === passwordHash) {
+      sessionStorage.setItem('normahl_auth', hash);
+      location.replace(base);
+    } else {
+      document.getElementById('error').hidden = false;
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+    }
+  });
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    filter: blur(6px) grayscale(0.4);
+    transform: scale(1.05);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .login-box {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .logo {
+    width: 200px;
+    filter: invert(1);
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+  }
+
+  input[type="password"]::placeholder { color: rgba(255,255,255,0.5); }
+  input[type="password"]:focus { border-color: rgba(255,255,255,0.7); }
+
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #fff;
+    color: #0a0a0a;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  button:hover { background: #ddd; }
+
+  .error {
+    color: #ff6b6b;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+</style>
