@@ -3,4 +3,3 @@ dist/
 .astro/
 *.log
 .DS_Store.playwright-mcp/
-resources/

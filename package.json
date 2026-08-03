@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "node scripts/generate-thumbnails.mjs && astro build",
     "preview": "astro preview",
-    "check": "astro sync",
-    "fetch-calendar": "node scripts/fetch-calendar.mjs"
+    "check": "astro sync"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
