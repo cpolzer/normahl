@@ -111,7 +111,7 @@ const heroImages = [
 
   <Footer />
 
-  <div id="config-bar">
+  {site.showPreview && <div id="config-bar">
     <span class="config-label">Preview</span>
     <button id="toggle-adler" class="config-btn">Adler: AN</button>
     <button id="toggle-hero-content" class="config-btn">Hero-Inhalt: AN</button>
@@ -119,7 +119,9 @@ const heroImages = [
     <button class="config-btn color-btn" data-color="white">Weiß</button>
     <button class="config-btn color-btn" data-color="red">Rot</button>
     <button class="config-btn color-btn" data-color="grey">Grau</button>
+    <button id="close-config" class="config-btn config-close" aria-label="Schließen">✕</button>
   </div>
+  <button id="open-config" class="config-reopen" aria-label="Preview öffnen" hidden>⚙</button>}
 </BaseLayout>
 
 <script>
@@ -155,6 +157,18 @@ const heroImages = [
   }
 
   applyColor(currentColor);
+
+  // Close/open config bar
+  const configBar = document.getElementById('config-bar')!;
+  const openBtn = document.getElementById('open-config')!;
+  document.getElementById('close-config')!.addEventListener('click', () => {
+    configBar.hidden = true;
+    openBtn.hidden = false;
+  });
+  openBtn.addEventListener('click', () => {
+    configBar.hidden = false;
+    openBtn.hidden = true;
+  });
 
   colorBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -469,6 +483,24 @@ const heroImages = [
   .hero[data-color="grey"] .hero-logo { filter: invert(1) grayscale(1) brightness(0.75); }
 
   .config-btn.active-color { border-color: #fff; color: #fff; }
+  .config-close { margin-left: 0.5rem; border-color: #555; }
+  .config-reopen {
+    position: fixed;
+    top: 70px;
+    right: 1rem;
+    z-index: 200;
+    background: rgba(10,10,10,0.85);
+    color: #888;
+    border: 1px solid #333;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .config-reopen:hover { color: #fff; }
 
   #config-bar {
     position: fixed;
