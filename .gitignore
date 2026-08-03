@@ -9,3 +9,4 @@ resources/
 scripts/fetch-calendar.mjs
 .env
 .env.local
+slide-*.jpeg
