@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
 import news from '../data/news.json';
+import site from '../data/site.json';
 
 const upcomingConcerts = concerts
   .filter(c => !c.cancelled && !c.tbc && !/tbc/i.test(`${c.venue} ${c.city}`) && new Date(c.date) >= new Date())
@@ -20,7 +21,7 @@ const heroImages = [
 ];
 ---
 
-<BaseLayout title="NoRMAhl - Deutsche Rockband">
+<BaseLayout title="NoRMAhl - Punkrock `76">
   <Header />
   
   <main>
@@ -34,10 +35,10 @@ const heroImages = [
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1 class="hero-title"><img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="hero-logo" /></h1>
-        <p class="hero-subtitle">Live in Bayerland</p>
+        <p class="hero-subtitle">Live im Niemandsland</p>
         <div class="hero-actions">
-          <a href="https://www.amazon.de/Live-Bayerland-Jahre-Diesel-Bier/dp/B07L19C25K" target="_blank" class="btn btn-primary">Kaufen</a>
-          <a href="https://open.spotify.com/album/42CUl09G2oeiWsw7IPnlWU" target="_blank" class="btn btn-primary">Streamen</a>
+          <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary">Kaufen</a>
+          <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary">Streamen</a>
           <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-primary">Video</a>
         </div>
       </div>
@@ -66,7 +67,7 @@ const heroImages = [
     </section>
 
     <!-- News Section -->
-    <section class="section section-gray">
+    {site.showNews && <section class="section section-gray">
       <div class="container">
         <h2 class="section-title">NEU</h2>
         <div class="divider"></div>
@@ -105,7 +106,7 @@ const heroImages = [
           </div>
         </div>
       </div>
-    </section>
+    </section>}
   </main>
 
   <Footer />
