@@ -7,7 +7,7 @@ const heroDir = 'public/images/hero';
 
 const heroImages = [
   { src: 'public/images/presse/new_CKU/1 CKU 260502 0715.jpg', dst: 'public/images/hero/hero-1.jpg', max: 1920 },
-  { src: 'public/images/presse/new_CKU/2 CKU 260502 0756.jpg', dst: 'public/images/hero/hero-2.jpg', max: 1920 },
+  { src: 'public/images/presse/new_CKU/5 CKU 260502 0787.jpg', dst: 'public/images/hero/hero-2.jpg', max: 1920 },
   { src: 'public/images/presse/new_CKU/4 CKU 260502 0782.jpg', dst: 'public/images/hero/hero-3.jpg', max: 1920 },
 ];
 

@@ -21,7 +21,7 @@ const heroImages = [
 ];
 ---
 
-<BaseLayout title="NoRMAhl - Punkrock `76">
+<BaseLayout title="NoRMAhl - Punkrock `78">
   <Header />
   
   <main>
@@ -35,7 +35,7 @@ const heroImages = [
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1 class="hero-title"><img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="hero-logo" /></h1>
-        <p class="hero-subtitle">Punkrock `76</p>
+        <p class="hero-subtitle">Punkrock `78</p>
         <div class="hero-actions">
           <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary">Kaufen</a>
           <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary">Streamen</a>
@@ -45,7 +45,7 @@ const heroImages = [
     </section>
 
     <!-- Konzerte Section -->
-    <section id="konzerte" class="section">
+    <section id="konzerte" class="section section-adler">
       <div class="container">
         <h2 class="section-title">KONZERTE</h2>
         <div class="divider"></div>
@@ -110,9 +110,51 @@ const heroImages = [
   </main>
 
   <Footer />
+
+  <div id="config-bar">
+    <span class="config-label">Preview</span>
+    <button id="toggle-adler" class="config-btn">Adler: AN</button>
+    <button id="toggle-hero-content" class="config-btn">Hero-Inhalt: AN</button>
+  </div>
 </BaseLayout>
 
 <script>
+  // Config bar
+  const adlerSection = document.querySelector('.section-adler') as HTMLElement | null;
+  const heroContent = document.querySelector('.hero-content') as HTMLElement | null;
+  const toggleAdler = document.getElementById('toggle-adler') as HTMLButtonElement;
+  const toggleHero = document.getElementById('toggle-hero-content') as HTMLButtonElement;
+
+  let adlerOn = localStorage.getItem('cfg_adler') === 'on';
+  let heroOn = localStorage.getItem('cfg_hero') !== 'off';
+
+  function applyAdler() {
+    if (adlerSection) adlerSection.classList.toggle('adler-hidden', !adlerOn);
+    toggleAdler.textContent = `Adler: ${adlerOn ? 'AN' : 'AUS'}`;
+    toggleAdler.classList.toggle('off', !adlerOn);
+  }
+
+  function applyHero() {
+    if (heroContent) heroContent.classList.toggle('hero-hidden', !heroOn);
+    toggleHero.textContent = `Hero-Inhalt: ${heroOn ? 'AN' : 'AUS'}`;
+    toggleHero.classList.toggle('off', !heroOn);
+  }
+
+  applyAdler();
+  applyHero();
+
+  toggleAdler.addEventListener('click', () => {
+    adlerOn = !adlerOn;
+    localStorage.setItem('cfg_adler', adlerOn ? 'on' : 'off');
+    applyAdler();
+  });
+
+  toggleHero.addEventListener('click', () => {
+    heroOn = !heroOn;
+    localStorage.setItem('cfg_hero', heroOn ? 'on' : 'off');
+    applyHero();
+  });
+
   // Hero slideshow
   const heroSlides = document.querySelectorAll('.hero-slide');
   let currentSlide = 0;
@@ -171,6 +213,11 @@ const heroImages = [
     transition: opacity 1s ease;
   }
 
+  .hero-slide[data-index="1"] {
+    background-size: 110%;
+    background-position: 45% top;
+  }
+
   .hero-slide.active {
     opacity: 1;
   }
@@ -224,6 +271,26 @@ const heroImages = [
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  .section-adler {
+    position: relative;
+  }
+
+  .section-adler::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/normahl/images/presse/logo_normahl_adler.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+    opacity: 0.04;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-composite: destination-in;
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-composite: intersect;
+    pointer-events: none;
   }
 
   .concerts-grid {
@@ -365,6 +432,47 @@ const heroImages = [
     white-space: pre-line;
     line-height: 1.7;
   }
+
+  .adler-hidden::before { display: none; }
+  .hero-hidden { opacity: 0; pointer-events: none; }
+
+  #config-bar {
+    position: fixed;
+    top: 70px;
+    right: 1rem;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.4rem 0.75rem;
+    border: 1px solid #333;
+    font-size: 0.75rem;
+  }
+
+  .config-label {
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    margin-right: 0.25rem;
+  }
+
+  .config-btn {
+    background: #1a1a1a;
+    color: #ccc;
+    border: 1px solid #444;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+
+  .config-btn:hover { border-color: #aaa; color: #fff; }
+  .config-btn.off { color: #555; border-color: #333; }
 
   @media (max-width: 640px) {
     .hero {
