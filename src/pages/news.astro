@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import news from '../data/news.json';
 
+const base = import.meta.env.BASE_URL;
 const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
@@ -18,7 +19,7 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
         {sortedNews.map((item) => (
           <article class="news-item">
             <div class="news-image">
-              <img src={item.image} alt={item.title} />
+              <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} />
             </div>
             <div class="news-content">
               <h2 class="news-title">{item.title}</h2>
