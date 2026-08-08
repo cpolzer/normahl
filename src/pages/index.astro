@@ -64,17 +64,21 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
       <div class="container">
         <h2 class="section-title">KONZERTE</h2>
         <div class="divider"></div>
-        
-        <div class="concerts-grid">
+
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
           {upcomingConcerts.map((concert) => (
-            <a href={concert.ticketUrl} target="_blank" class="concert-card">
-              <span class="concert-date">{new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-              <span class="concert-venue">{concert.venue}</span>
-              <span class="concert-city">{concert.city}</span>
+            <a
+              href={concert.ticketUrl}
+              target="_blank"
+              class="block border-2 border-black p-6 transition-all duration-200 hover:-translate-y-1 hover:bg-black hover:text-white hover:shadow-[6px_6px_0_var(--color-accent)]"
+            >
+              <span class="mb-2 block text-2xl font-bold">{new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+              <span class="block text-lg font-medium">{concert.venue}</span>
+              <span class="block text-sm text-[#666]">{concert.city}</span>
             </a>
           ))}
         </div>
-        
+
         <div class="text-center mt-8">
           <a href={`${base}konzerte`} class="btn btn-outline">Alle Konzerte</a>
         </div>
@@ -82,35 +86,35 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
     </section>
 
     <!-- News Section -->
-    {site.showNews && <section class="section section-gray">
+    {site.showNews && <section class="section bg-[#f5f5f5]">
       <div class="container">
         <h2 class="section-title">NEU</h2>
         <div class="divider"></div>
-        
-        <div class="news-tabs">
-          <nav class="news-thumbnav">
+
+        <div class="mx-auto max-w-[900px]">
+          <nav class="mb-8 flex flex-wrap justify-center gap-3">
             {sortedNews.map((item, index) => (
-              <button 
-                class:list={['news-thumb', { active: index === 0 }]} 
+              <button
+                class:list={['news-thumb h-[70px] w-[70px] cursor-pointer overflow-hidden border-2 border-[#ddd] bg-white p-0 transition-all duration-200 hover:border-black [&.active]:border-[3px] [&.active]:border-black', { active: index === 0 }]}
                 data-index={index}
                 aria-label={item.title}
               >
-                <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} class="news-thumb-img" />
+                <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} class="h-full w-full object-cover" />
               </button>
             ))}
           </nav>
-          
-          <div class="news-content">
+
+          <div>
             {sortedNews.map((item, index) => (
-              <div class:list={['news-panel', { active: index === 0 }]} data-index={index}>
-                <div class="news-panel-inner">
-                  <div class="news-image">
-                    <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} />
+              <div class:list={['news-panel hidden [&.active]:block [&.active]:animate-[fadeIn_0.3s_ease]', { active: index === 0 }]} data-index={index}>
+                <div class="grid grid-cols-1 items-start gap-8 sm:grid-cols-[300px_1fr]">
+                  <div class="aspect-square overflow-hidden border-2 border-black">
+                    <img src={`${base}${item.image.replace(/^\//, '')}`} alt={item.title} class="h-full w-full object-cover" />
                   </div>
-                  <div class="news-text">
-                    <h3 class="news-title">{item.title}</h3>
-                    <p class="news-date">{new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
-                    <p class="news-body">{item.content || item.excerpt}</p>
+                  <div>
+                    <h3 class="mb-2 text-[1.75rem] leading-[1.2] font-bold">{item.title}</h3>
+                    <p class="mb-4 text-sm text-[#666]">{new Date(item.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+                    <p class="mb-6 leading-[1.7] whitespace-pre-line">{item.content || item.excerpt}</p>
                     {item.links?.map(link => (
                       <a href={link.url} target="_blank" class="btn btn-primary">{link.label}</a>
                     ))}
@@ -126,17 +130,17 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 
   <Footer />
 
-  {site.showPreview && <div id="config-bar">
-    <span class="config-label">Preview</span>
+  {site.showPreview && <div id="config-bar" class="fixed top-[70px] right-4 z-[99] flex items-center gap-2 border border-[#333] bg-black/85 px-3 py-1.5 text-xs backdrop-blur-[8px]">
+    <span class="config-label mr-1 text-[0.7rem] tracking-[0.08em] text-[#666] uppercase">Preview</span>
     <button id="toggle-adler" class="config-btn">Adler: AN</button>
     <button id="toggle-hero-content" class="config-btn">Hero-Inhalt: AN</button>
-    <span class="config-label">Farbe</span>
+    <span class="config-label mr-1 text-[0.7rem] tracking-[0.08em] text-[#666] uppercase">Farbe</span>
     <button class="config-btn color-btn" data-color="white">Weiß</button>
     <button class="config-btn color-btn" data-color="red">Rot</button>
     <button class="config-btn color-btn" data-color="grey">Grau</button>
-    <button id="close-config" class="config-btn config-close" aria-label="Schließen">✕</button>
+    <button id="close-config" class="config-btn ml-2 border-[#555]" aria-label="Schließen">✕</button>
   </div>
-  <button id="open-config" class="config-reopen" aria-label="Preview öffnen" hidden>⚙</button>}
+  <button id="open-config" class="config-reopen fixed top-[70px] right-4 z-[99] flex h-8 w-8 cursor-pointer items-center justify-center border border-[#333] bg-black/85 text-base text-[#888] hover:text-white" aria-label="Preview öffnen" hidden>⚙</button>}
 </BaseLayout>
 
 <script>
@@ -261,190 +265,12 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
     pointer-events: none;
   }
 
-  .concerts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .concert-card {
-    display: block;
-    border: 2px solid #0a0a0a;
-    padding: 1.5rem;
-    transition: all 0.2s ease;
-  }
-
-  .concert-card:hover {
-    background: #0a0a0a;
-    color: #fff;
-    transform: translateY(-4px);
-    box-shadow: 6px 6px 0 #cc0000;
-  }
-
-  .concert-date {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .concert-venue {
-    display: block;
-    font-size: 1.125rem;
-    font-weight: 500;
-  }
-
-  .concert-city {
-    display: block;
-    color: #666;
-    font-size: 0.875rem;
-  }
-
-  .section-gray {
-    background: #f5f5f5;
-  }
-
-  .news-tabs {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .news-thumbnav {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .news-thumb {
-    width: 70px;
-    height: 70px;
-    border: 2px solid #ddd;
-    background: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .news-thumb:hover {
-    border-color: #0a0a0a;
-  }
-
-  .news-thumb.active {
-    border-color: #0a0a0a;
-    border-width: 3px;
-  }
-
-  .news-thumb-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .news-panel {
-    display: none;
-  }
-
-  .news-panel.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-  }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .news-panel-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  @media (min-width: 640px) {
-    .news-panel-inner {
-      grid-template-columns: 300px 1fr;
-    }
-  }
-
-  .news-image {
-    aspect-ratio: 1;
-    overflow: hidden;
-    border: 2px solid #0a0a0a;
-  }
-
-  .news-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .news-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-  }
-
-  .news-date {
-    color: #666;
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-  }
-
-  .news-body {
-    margin-bottom: 1.5rem;
-    white-space: pre-line;
-    line-height: 1.7;
-  }
-
   .adler-hidden::before { display: none; }
-
-  .config-btn.active-color { border-color: #fff; color: #fff; }
-  .config-close { margin-left: 0.5rem; border-color: #555; }
-  .config-reopen {
-    position: fixed;
-    top: 70px;
-    right: 1rem;
-    z-index: 99;
-    background: rgba(10,10,10,0.85);
-    color: #888;
-    border: 1px solid #333;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .config-reopen:hover { color: #fff; }
-
-  #config-bar {
-    position: fixed;
-    top: 70px;
-    right: 1rem;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(8px);
-    padding: 0.4rem 0.75rem;
-    border: 1px solid #333;
-    font-size: 0.75rem;
-  }
-
-  .config-label {
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.7rem;
-    margin-right: 0.25rem;
-  }
 
   .config-btn {
     background: #1a1a1a;
@@ -460,4 +286,5 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 
   .config-btn:hover { border-color: #aaa; color: #fff; }
   .config-btn.off { color: #555; border-color: #333; }
+  .config-btn.active-color { border-color: #fff; color: #fff; }
 </style>
