@@ -27,7 +27,7 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
   
   <main>
     <!-- Hero Section with rotating background -->
-    <section class="home-hero group relative flex min-h-[70vh] items-end justify-center overflow-hidden max-sm:min-h-[85vh]">
+    <section class="home-hero group relative flex min-h-[70vh] items-end justify-center overflow-hidden max-sm:min-h-[48vh]" data-testid="hero">
       <div class="absolute inset-0 max-sm:hidden">
         {heroImages.map((img, i) => (
           <div
@@ -38,7 +38,7 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
         ))}
       </div>
       <div
-        class="absolute inset-0 hidden bg-cover bg-center bg-no-repeat max-sm:block"
+        class="absolute inset-0 hidden bg-cover bg-top bg-no-repeat max-sm:block"
         style={`background-image: url(${heroMobileImage})`}
       ></div>
       <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(10,10,10,0.85)_0%,rgba(26,26,26,0.7)_50%,rgba(10,10,10,0.85)_100%)]"></div>
@@ -48,19 +48,20 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
             src={`${base}images/hero/normahl-schrift.svg`}
             alt="NoRMAhl"
             class="mx-auto block h-auto max-h-[200px] max-w-[80%] group-data-[color='red']:[filter:brightness(0)_saturate(100%)_invert(13%)_sepia(99%)_saturate(7471%)_hue-rotate(3deg)_brightness(95%)_contrast(114%)] group-data-[color='white']:invert group-data-[color='grey']:grayscale group-data-[color='grey']:invert group-data-[color='grey']:brightness-75 max-sm:max-h-[100px] max-sm:max-w-[70%]"
+            data-testid="hero-logo"
           />
         </h1>
         <p class="mb-8 text-[clamp(1.25rem,3vw,1.75rem)] font-light tracking-[0.2em] text-[#aaa] uppercase max-sm:mb-5 max-sm:text-sm max-sm:tracking-[0.12em]">Punkrock `78</p>
-        <div class="flex flex-wrap justify-center gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-2">
-          <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Kaufen</a>
-          <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Streamen</a>
-          <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Video</a>
+        <div class="flex flex-wrap justify-center gap-4 max-sm:gap-2" data-testid="hero-actions">
+          <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary max-sm:px-3 max-sm:text-xs">Kaufen</a>
+          <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary max-sm:px-3 max-sm:text-xs">Streamen</a>
+          <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-primary max-sm:px-3 max-sm:text-xs">Video</a>
         </div>
       </div>
     </section>
 
     <!-- Konzerte Section -->
-    <section id="konzerte" class="section section-adler">
+    <section id="konzerte" class="section">
       <div class="container">
         <h2 class="section-title">KONZERTE</h2>
         <div class="divider"></div>
@@ -70,11 +71,12 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
             <a
               href={concert.ticketUrl}
               target="_blank"
-              class="block border-2 border-black p-6 transition-all duration-200 hover:-translate-y-1 hover:bg-black hover:text-white hover:shadow-[6px_6px_0_var(--color-accent)]"
+              class="group block border-2 border-black p-6 transition-all duration-200 hover:-translate-y-1 hover:bg-black hover:text-white! hover:shadow-[6px_6px_0_var(--color-accent)]"
+              data-testid="concert-card"
             >
-              <span class="mb-2 block text-2xl font-bold">{new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-              <span class="block text-lg font-medium">{concert.venue}</span>
-              <span class="block text-sm text-[#666]">{concert.city}</span>
+              <span class="mb-2 block text-2xl font-bold" data-testid="concert-card-date">{new Date(concert.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
+              <span class="block text-lg font-medium" data-testid="concert-card-venue">{concert.venue}</span>
+              <span class="block text-sm text-[#666] group-hover:text-white" data-testid="concert-card-city">{concert.city}</span>
             </a>
           ))}
         </div>
@@ -144,73 +146,74 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 </BaseLayout>
 
 <script>
-  // Config bar
-  const adlerSection = document.querySelector('.section-adler') as HTMLElement | null;
-  const heroContent = document.querySelector('.hero-content') as HTMLElement | null;
-  const toggleAdler = document.getElementById('toggle-adler') as HTMLButtonElement;
-  const toggleHero = document.getElementById('toggle-hero-content') as HTMLButtonElement;
-
-  let adlerOn = localStorage.getItem('cfg_adler') === 'on';
-  let heroOn = localStorage.getItem('cfg_hero') !== 'off';
-
-  function applyAdler() {
-    if (adlerSection) adlerSection.classList.toggle('adler-hidden', !adlerOn);
-    toggleAdler.textContent = `Adler: ${adlerOn ? 'AN' : 'AUS'}`;
-    toggleAdler.classList.toggle('off', !adlerOn);
-  }
-
-  function applyHero() {
-    if (heroContent) heroContent.classList.toggle('hero-hidden', !heroOn);
-    toggleHero.textContent = `Hero-Inhalt: ${heroOn ? 'AN' : 'AUS'}`;
-    toggleHero.classList.toggle('off', !heroOn);
-  }
-
-  // Color theme
+  // Color theme (applies regardless of whether the preview config bar is rendered)
   const hero = document.querySelector('.home-hero') as HTMLElement | null;
-  const colorBtns = document.querySelectorAll<HTMLButtonElement>('.color-btn');
   let currentColor = localStorage.getItem('cfg_color') || 'white';
 
   function applyColor(color: string) {
     if (hero) hero.setAttribute('data-color', color);
-    colorBtns.forEach(b => b.classList.toggle('active-color', b.dataset.color === color));
+    document.querySelectorAll<HTMLButtonElement>('.color-btn').forEach(b => b.classList.toggle('active-color', b.dataset.color === color));
   }
 
   applyColor(currentColor);
 
-  // Close/open config bar
-  const configBar = document.getElementById('config-bar')!;
-  const openBtn = document.getElementById('open-config')!;
-  document.getElementById('close-config')!.addEventListener('click', () => {
-    configBar.hidden = true;
-    openBtn.hidden = false;
-  });
-  openBtn.addEventListener('click', () => {
-    configBar.hidden = false;
-    openBtn.hidden = true;
-  });
+  // Config bar (only rendered when site.showPreview is true)
+  const configBar = document.getElementById('config-bar');
+  if (configBar) {
+    const adlerSection = document.querySelector('.section-adler') as HTMLElement | null;
+    const heroContent = document.querySelector('.hero-content') as HTMLElement | null;
+    const toggleAdler = document.getElementById('toggle-adler') as HTMLButtonElement;
+    const toggleHero = document.getElementById('toggle-hero-content') as HTMLButtonElement;
+    const openBtn = document.getElementById('open-config') as HTMLButtonElement;
+    const colorBtns = document.querySelectorAll<HTMLButtonElement>('.color-btn');
 
-  colorBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentColor = btn.dataset.color!;
-      localStorage.setItem('cfg_color', currentColor);
-      applyColor(currentColor);
+    let adlerOn = localStorage.getItem('cfg_adler') === 'on';
+    let heroOn = localStorage.getItem('cfg_hero') !== 'off';
+
+    function applyAdler() {
+      if (adlerSection) adlerSection.classList.toggle('adler-hidden', !adlerOn);
+      toggleAdler.textContent = `Adler: ${adlerOn ? 'AN' : 'AUS'}`;
+      toggleAdler.classList.toggle('off', !adlerOn);
+    }
+
+    function applyHero() {
+      if (heroContent) heroContent.classList.toggle('hero-hidden', !heroOn);
+      toggleHero.textContent = `Hero-Inhalt: ${heroOn ? 'AN' : 'AUS'}`;
+      toggleHero.classList.toggle('off', !heroOn);
+    }
+
+    document.getElementById('close-config')!.addEventListener('click', () => {
+      configBar.hidden = true;
+      openBtn.hidden = false;
     });
-  });
+    openBtn.addEventListener('click', () => {
+      configBar.hidden = false;
+      openBtn.hidden = true;
+    });
 
-  applyAdler();
-  applyHero();
+    colorBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentColor = btn.dataset.color!;
+        localStorage.setItem('cfg_color', currentColor);
+        applyColor(currentColor);
+      });
+    });
 
-  toggleAdler.addEventListener('click', () => {
-    adlerOn = !adlerOn;
-    localStorage.setItem('cfg_adler', adlerOn ? 'on' : 'off');
     applyAdler();
-  });
-
-  toggleHero.addEventListener('click', () => {
-    heroOn = !heroOn;
-    localStorage.setItem('cfg_hero', heroOn ? 'on' : 'off');
     applyHero();
-  });
+
+    toggleAdler.addEventListener('click', () => {
+      adlerOn = !adlerOn;
+      localStorage.setItem('cfg_adler', adlerOn ? 'on' : 'off');
+      applyAdler();
+    });
+
+    toggleHero.addEventListener('click', () => {
+      heroOn = !heroOn;
+      localStorage.setItem('cfg_hero', heroOn ? 'on' : 'off');
+      applyHero();
+    });
+  }
 
   // Hero slideshow
   const heroSlides = document.querySelectorAll('.hero-slide');

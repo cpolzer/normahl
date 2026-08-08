@@ -70,17 +70,17 @@ test.describe('Header', () => {
 test.describe('Hero', () => {
   test('hero section renders', async ({ page }) => {
     await page.goto(BASE);
-    await expect(page.locator('.hero')).toBeVisible();
+    await expect(page.getByTestId('hero')).toBeVisible();
   });
 
   test('hero logo visible', async ({ page }) => {
     await page.goto(BASE);
-    await expect(page.locator('.hero-logo')).toBeVisible();
+    await expect(page.getByTestId('hero-logo')).toBeVisible();
   });
 
   test('hero action buttons present', async ({ page }) => {
     await page.goto(BASE);
-    await expect(page.locator('.hero-actions .btn')).toHaveCount(3);
+    await expect(page.getByTestId('hero-actions').locator('.btn')).toHaveCount(3);
   });
 });
 
@@ -92,13 +92,37 @@ test.describe('Concerts section', () => {
 
   test('at least one concert card rendered', async ({ page }) => {
     await page.goto(BASE);
-    const cards = page.locator('.concert-card');
+    const cards = page.getByTestId('concert-card');
     await expect(cards.first()).toBeVisible();
   });
 
   test('"Alle Konzerte" link present', async ({ page }) => {
     await page.goto(BASE);
     await expect(page.locator(`a[href$="konzerte"]`).last()).toBeVisible();
+  });
+
+  // Regression test: a global.css `a { color: inherit; }` rule (unlayered)
+  // silently beat Tailwind's `hover:text-white` utility (layered), so the
+  // card's date/venue text stayed black-on-black on hover. Fixed by forcing
+  // `hover:text-white!`. This test guards against that regressing silently.
+  test('all text turns white on hover (not just background)', async ({ page }, testInfo) => {
+    // Touch devices have no CSS :hover state to test.
+    test.skip(testInfo.project.name === 'mobile');
+    await page.goto(BASE);
+    const card = page.getByTestId('concert-card').first();
+    await card.hover();
+
+    const parts = [
+      page.getByTestId('concert-card-date').first(),
+      page.getByTestId('concert-card-venue').first(),
+      page.getByTestId('concert-card-city').first(),
+    ];
+
+    for (const part of parts) {
+      // `transition-all duration-200` animates color, so poll past the
+      // transition instead of reading getComputedStyle immediately.
+      await expect.poll(() => part.evaluate(el => getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
+    }
   });
 });
 

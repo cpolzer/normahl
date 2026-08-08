@@ -10,3 +10,5 @@ scripts/fetch-calendar.mjs
 .env
 .env.local
 slide-*.jpeg
+test-results/
+playwright-report/
