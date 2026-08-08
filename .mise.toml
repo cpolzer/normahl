@@ -16,3 +16,11 @@ run = "npm run preview"
 [tasks.check]
 description = "Type-check the project"
 run = "npm run check"
+
+[tasks.test]
+description = "Run Playwright e2e responsiveness tests"
+run = "npm run test:e2e"
+
+[tasks."test:ui"]
+description = "Run Playwright e2e tests in UI mode"
+run = "npm run test:e2e:ui"
