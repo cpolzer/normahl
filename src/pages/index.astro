@@ -19,6 +19,7 @@ const heroImages = [
   `${base}images/hero/hero-2.jpg`,
   `${base}images/hero/hero-3.jpg`,
 ];
+const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 ---
 
 <BaseLayout title="NoRMAhl - Punkrock `78">
@@ -32,6 +33,7 @@ const heroImages = [
           <div class="hero-slide" data-index={i} style={`background-image: url(${img})`}></div>
         ))}
       </div>
+      <div class="hero-slide-mobile" style={`background-image: url(${heroMobileImage})`}></div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1 class="hero-title"><img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="hero-logo" /></h1>
@@ -196,13 +198,11 @@ const heroImages = [
   // Hero slideshow
   const heroSlides = document.querySelectorAll('.hero-slide');
   let currentSlide = 0;
-  
+
   function showNextSlide() {
     heroSlides.forEach((slide, i) => {
       slide.classList.remove('active');
-      if (i === currentSlide) {
-        slide.classList.add('active');
-      }
+      if (i === currentSlide) slide.classList.add('active');
     });
     currentSlide = (currentSlide + 1) % heroSlides.length;
   }
@@ -240,6 +240,10 @@ const heroImages = [
   .hero-slideshow {
     position: absolute;
     inset: 0;
+  }
+
+  .hero-slide-mobile {
+    display: none;
   }
 
   .hero-slide {
@@ -542,9 +546,17 @@ const heroImages = [
   .config-btn.off { color: #555; border-color: #333; }
 
   @media (max-width: 640px) {
-    .hero-slide[data-index="1"] {
+    .hero-slideshow {
+      display: none;
+    }
+
+    .hero-slide-mobile {
+      display: block;
+      position: absolute;
+      inset: 0;
       background-size: cover;
-      background-position: top center;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .hero {
