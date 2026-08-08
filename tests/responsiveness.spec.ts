@@ -40,6 +40,26 @@ test.describe('Header', () => {
     await expect(page.locator('.main-nav')).toHaveClass(/open/);
   });
 
+  test('mobile nav items are left-aligned', async ({ page, viewport }) => {
+    if ((viewport?.width ?? 9999) >= 641) test.skip();
+    await page.goto(BASE);
+    await page.locator('.mobile-toggle').click();
+    await expect(page.locator('.main-nav')).toHaveClass(/open/);
+    const navList = page.locator('.nav-list');
+    const textAlign = await navList.evaluate(el => getComputedStyle(el).textAlign);
+    expect(textAlign).toBe('left');
+  });
+
+  test('mobile nav items are not obscured by config bar', async ({ page, viewport }) => {
+    if ((viewport?.width ?? 9999) >= 641) test.skip();
+    await page.goto(BASE);
+    const configBar = page.locator('#config-bar');
+    if (await configBar.count() === 0) return;
+    // Config bar must sit below the header (z-index 100) so mobile nav covers it
+    const configZIndex = await configBar.evaluate(el => parseInt(getComputedStyle(el).zIndex) || 0);
+    expect(configZIndex).toBeLessThan(100);
+  });
+
   test('social icons visible on desktop', async ({ page, viewport }) => {
     if ((viewport?.width ?? 0) < 641) test.skip();
     await page.goto(BASE);

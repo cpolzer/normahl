@@ -247,6 +247,7 @@ const heroImages = [
     inset: 0;
     background-size: cover;
     background-position: top center;
+    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 1s ease;
   }
@@ -541,18 +542,40 @@ const heroImages = [
   .config-btn.off { color: #555; border-color: #333; }
 
   @media (max-width: 640px) {
+    .hero-slide[data-index="1"] {
+      background-size: cover;
+      background-position: top center;
+    }
+
     .hero {
-      min-height: 60vh;
+      min-height: 85vh;
+      align-items: flex-end;
+    }
+
+    .hero-content {
+      padding: 1rem 1rem 2.5rem;
+    }
+
+    .hero-logo {
+      max-height: 100px;
+      max-width: 70%;
+    }
+
+    .hero-subtitle {
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.12em;
     }
 
     .hero-actions {
       flex-direction: column;
       align-items: center;
+      gap: 0.5rem;
     }
 
     .hero-actions .btn {
       width: 100%;
-      max-width: 200px;
+      max-width: 220px;
     }
   }
 </style>
