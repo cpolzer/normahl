@@ -27,21 +27,34 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
   
   <main>
     <!-- Hero Section with rotating background -->
-    <section class="hero">
-      <div class="hero-slideshow">
+    <section class="home-hero group relative flex min-h-[70vh] items-end justify-center overflow-hidden max-sm:min-h-[85vh]">
+      <div class="absolute inset-0 max-sm:hidden">
         {heroImages.map((img, i) => (
-          <div class="hero-slide" data-index={i} style={`background-image: url(${img})`}></div>
+          <div
+            class="hero-slide absolute inset-0 bg-top bg-cover bg-no-repeat opacity-0 transition-opacity duration-1000 ease-in-out [&.active]:opacity-100 data-[index='1']:bg-[45%_top] data-[index='1']:bg-[length:110%]"
+            data-index={i}
+            style={`background-image: url(${img})`}
+          ></div>
         ))}
       </div>
-      <div class="hero-slide-mobile" style={`background-image: url(${heroMobileImage})`}></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1 class="hero-title"><img src={`${base}images/hero/normahl-schrift.svg`} alt="NoRMAhl" class="hero-logo" /></h1>
-        <p class="hero-subtitle">Punkrock `78</p>
-        <div class="hero-actions">
-          <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary">Kaufen</a>
-          <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary">Streamen</a>
-          <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-primary">Video</a>
+      <div
+        class="absolute inset-0 hidden bg-cover bg-center bg-no-repeat max-sm:block"
+        style={`background-image: url(${heroMobileImage})`}
+      ></div>
+      <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(10,10,10,0.85)_0%,rgba(26,26,26,0.7)_50%,rgba(10,10,10,0.85)_100%)]"></div>
+      <div class="hero-content relative z-10 flex flex-col items-center px-8 pt-8 pb-16 text-center transition-opacity [&.hero-hidden]:pointer-events-none [&.hero-hidden]:opacity-0 max-sm:px-4 max-sm:pt-4 max-sm:pb-10">
+        <h1 class="mb-2 text-[clamp(3rem,12vw,8rem)] leading-[0.9] font-black tracking-[-0.04em] text-white uppercase">
+          <img
+            src={`${base}images/hero/normahl-schrift.svg`}
+            alt="NoRMAhl"
+            class="mx-auto block h-auto max-h-[200px] max-w-[80%] group-data-[color='red']:[filter:brightness(0)_saturate(100%)_invert(13%)_sepia(99%)_saturate(7471%)_hue-rotate(3deg)_brightness(95%)_contrast(114%)] group-data-[color='white']:invert group-data-[color='grey']:grayscale group-data-[color='grey']:invert group-data-[color='grey']:brightness-75 max-sm:max-h-[100px] max-sm:max-w-[70%]"
+          />
+        </h1>
+        <p class="mb-8 text-[clamp(1.25rem,3vw,1.75rem)] font-light tracking-[0.2em] text-[#aaa] uppercase max-sm:mb-5 max-sm:text-sm max-sm:tracking-[0.12em]">Punkrock `78</p>
+        <div class="flex flex-wrap justify-center gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-2">
+          <a href="https://punk.de/?PreSearch=9" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Kaufen</a>
+          <a href="https://open.spotify.com/intl-de/artist/4A3ZGNdTWn4w4Aw6VFqoJm" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Streamen</a>
+          <a href="https://youtu.be/03dsocprW4Y" target="_blank" class="btn btn-primary max-sm:w-full max-sm:max-w-[220px]">Video</a>
         </div>
       </div>
     </section>
@@ -149,7 +162,7 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
   }
 
   // Color theme
-  const hero = document.querySelector('.hero') as HTMLElement | null;
+  const hero = document.querySelector('.home-hero') as HTMLElement | null;
   const colorBtns = document.querySelectorAll<HTMLButtonElement>('.color-btn');
   let currentColor = localStorage.getItem('cfg_color') || 'white';
 
@@ -228,93 +241,6 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 </script>
 
 <style>
-  .hero {
-    min-height: 70vh;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-slideshow {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero-slide-mobile {
-    display: none;
-  }
-
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: top center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
-
-  .hero-slide[data-index="1"] {
-    background-size: 110%;
-    background-position: 45% top;
-  }
-
-  .hero-slide.active {
-    opacity: 1;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(26,26,26,0.7) 50%, rgba(10,10,10,0.85) 100%);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 2rem 2rem 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-title {
-    font-size: clamp(3rem, 12vw, 8rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 0.9;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    color: #fff;
-  }
-
-  .hero-logo {
-    max-width: 80%;
-    height: auto;
-    max-height: 200px;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    font-weight: 300;
-    color: #aaa;
-    margin-bottom: 2rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
   .section-adler {
     position: relative;
   }
@@ -476,16 +402,6 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
   }
 
   .adler-hidden::before { display: none; }
-  .hero-hidden { opacity: 0; pointer-events: none; }
-
-  /* white (default) */
-  .hero[data-color="white"] .hero-logo { filter: invert(1); }
-
-  /* red */
-  .hero[data-color="red"] .hero-logo { filter: brightness(0) saturate(100%) invert(13%) sepia(99%) saturate(7471%) hue-rotate(3deg) brightness(95%) contrast(114%); }
-
-  /* grey */
-  .hero[data-color="grey"] .hero-logo { filter: invert(1) grayscale(1) brightness(0.75); }
 
   .config-btn.active-color { border-color: #fff; color: #fff; }
   .config-close { margin-left: 0.5rem; border-color: #555; }
@@ -544,50 +460,4 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
 
   .config-btn:hover { border-color: #aaa; color: #fff; }
   .config-btn.off { color: #555; border-color: #333; }
-
-  @media (max-width: 640px) {
-    .hero-slideshow {
-      display: none;
-    }
-
-    .hero-slide-mobile {
-      display: block;
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .hero {
-      min-height: 85vh;
-      align-items: flex-end;
-    }
-
-    .hero-content {
-      padding: 1rem 1rem 2.5rem;
-    }
-
-    .hero-logo {
-      max-height: 100px;
-      max-width: 70%;
-    }
-
-    .hero-subtitle {
-      font-size: 0.875rem;
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.12em;
-    }
-
-    .hero-actions {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .hero-actions .btn {
-      width: 100%;
-      max-width: 220px;
-    }
-  }
 </style>
