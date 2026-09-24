@@ -97,22 +97,13 @@
     "_summary": "Weihnachtspogo Chemnitz"
   },
   {
-    "date": "2027-06-19",
-    "venue": "Meinheim Open",
-    "city": "91802",
-    "ticketUrl": "https://hummelhausmeinheim.de/",
+    "date": "2027-07-03",
+    "venue": "Waschhaus Potsdam",
+    "city": "Potsdam",
+    "ticketUrl": "https://punk.de/index.php?MainCat=15&SubCat=86&ProdID=14908",
     "cancelled": false,
     "_source": "calendar",
-    "_summary": "Normahl in 91802 Meinheim Open-Air"
-  },
-  {
-    "date": "2027-06-26",
-    "venue": "Tank in Naumbuerg",
-    "city": "Naumbuerg",
-    "ticketUrl": "https://www.tank-naumburg.de/index.html",
-    "cancelled": false,
-    "_source": "calendar",
-    "_summary": "Normahl Tank in Naumbuerg Open-Air"
+    "_summary": "Normahl mit Wizo und Slime in Potsdam"
   },
   {
     "date": "2027-07-31",
