@@ -6,13 +6,15 @@ Conventions and gotchas for AI coding agents (Claude Code, etc.) working in this
 
 **mise is the one and only task runner for this repo.** Always invoke `mise run <task>` (see `.mise.toml`) — never call `npm run <script>` directly, even though the underlying `package.json` scripts exist. If a task you need doesn't have a `mise` entry yet, add one in `.mise.toml` in the same change rather than falling back to `npm run`.
 
-Current tasks: `mise run dev`, `mise run build`, `mise run preview`, `mise run check`, `mise run test`, `mise run test:ui`.
+Current tasks: `mise run dev`, `mise run build`, `mise run preview`, `mise run check`, `mise run test`, `mise run test:ui`, `mise run test:unit`, `mise run check:root`.
 
 ## Before making changes
 
 - `mise run build` must succeed (runs thumbnail generation + `astro build`). Run it after any change to `.astro` files or `astro.config.mjs`.
+- `mise run test` (Playwright e2e) serves the built `dist/` — always run `mise run build` right before it, or you'll be testing stale output.
 - For visual changes, prefer verifying in a real browser (dev server or `astro preview`) over trusting the build output alone — Tailwind/CSS issues don't show up as build errors.
 - Check `src/data/site.json` before assuming a section is "broken" — `showNews` and `showPreview` are feature flags, not bugs, when a section doesn't render.
+- Never hardcode the `/normahl/` base path, not even in CSS `url()`. The site can also be built with a different base path. Use `import.meta.env.BASE_URL` (in a `.astro` `<style>` block, pass it in via `define:vars`), or `canonical()` from `src/lib/urls.ts` for an absolute `https://www.normahl.de/...` URL.
 
 ## Styling conventions
 
@@ -20,6 +22,7 @@ Current tasks: `mise run dev`, `mise run build`, `mise run preview`, `mise run c
 - **Before naming a page-scoped class, grep `src/styles/global.css` for that name.** Tailwind's utilities live in a lower-priority `@layer`, so any unlayered rule in `global.css` with a matching class name silently wins over utility classes on that element, regardless of specificity or source order. This is not a theoretical risk — it broke the hero section's layout during the Tailwind migration (`.hero` collided with a legacy rule) and was only caught by visual inspection, not the build. If in doubt, prefix page-specific classes distinctively (e.g. `home-hero` instead of `hero`).
 - Brand colors are theme tokens in `global.css`'s `@theme` block (`--color-black`, `--color-accent`, `--color-gray-*`, …) — reference them via generated utilities (`bg-black`, `text-accent`) or `var(--color-accent)` in arbitrary values, not hardcoded hex, when the color is one of the existing tokens.
 - JS-driven state (`.active`, `.hero-hidden`, `.off`, `data-color`, etc.) toggled by vanilla `<script>` blocks is styled with Tailwind's arbitrary variants (`[&.active]:opacity-100`, `group-data-[color='red']:...`) rather than moved into a separate stylesheet, to keep the state/style mapping in one place.
+- New social/media icons must come from [Simple Icons](https://simpleicons.org) (CC0-1.0): copy the `d` path verbatim, add `aria-hidden="true"` to the `<svg>`, and an `aria-label` on the link. Social brand icons go in both the header (`.nav-social`) and footer (`.footer-social`) — an e2e test checks they use identical paths per brand. The feed icon is footer-only; it has no header counterpart.
 
 ## JS conventions
 
@@ -30,6 +33,11 @@ Current tasks: `mise run dev`, `mise run build`, `mise run preview`, `mise run c
 
 - Concert/news data lives in `src/data/*.json`. Editing these directly is fine and is the normal way to update content — no CMS.
 - `scripts/fetch-calendar.mjs` and `scripts/sync-concerts.mjs` are run manually (not in CI). Don't wire them into the build or a GitHub Action without being asked — the maintainer reviews synced calendar entries before committing.
+
+## Testing
+
+- Unit tests (Vitest, `mise run test:unit`) live at `src/**/*.test.ts`, next to the code they cover.
+- E2E specs (Playwright, `mise run test`) live in `tests/` and import `test`/`expect` from `./fixtures` (`tests/fixtures.ts`), not `@playwright/test` directly — that shared fixture also exports `BASE` and handles the auth-bypass automatically. `PW_PORT` overrides the port Playwright serves/tests on, so multiple suites (e.g. parallel worktrees) don't collide.
 
 ## Git workflow
 

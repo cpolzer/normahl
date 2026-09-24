@@ -1,18 +1,4 @@
-import { test, expect } from '@playwright/test';
-
-const BASE = '/normahl/';
-
-// Skip auth gate — set the sessionStorage token before each test
-test.beforeEach(async ({ page, context }) => {
-  // We need the hash to be set in storage before navigation.
-  // Use a dummy non-empty value so the guard doesn't redirect when
-  // PUBLIC_PASSWORD_HASH is undefined (dev build without env var).
-  await context.addInitScript(() => {
-    sessionStorage.setItem('normahl_auth', '__bypass_for_test__');
-  });
-  // If the site has no password set (local preview build), the guard
-  // checks `if (passwordHash && ...)` and skips — so tests pass either way.
-});
+import { test, expect, BASE } from './fixtures';
 
 test.describe('Header', () => {
   test('logo is visible', async ({ page }) => {
@@ -163,7 +149,7 @@ test.describe('Footer', () => {
 
   test('social icons in footer', async ({ page }) => {
     await page.goto(BASE);
-    await expect(page.locator('.footer-social a')).toHaveCount(4);
+    await expect(page.locator('.footer-social a')).toHaveCount(5);
   });
 
   test('impressum and datenschutz links present', async ({ page }) => {

@@ -1,8 +1,9 @@
 node_modules/
 dist/
+dist-root/
 .astro/
 *.log
-.DS_Store.playwright-mcp/
+.DS_Store
 
 resources/
 .playwright-mcp/

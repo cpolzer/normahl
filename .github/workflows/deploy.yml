@@ -1,20 +1,20 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "SFTP: only list what would be uploaded/deleted"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  build:
+  pages-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,9 +39,15 @@ jobs:
         with:
           path: ./dist
 
-  deploy:
-    needs: build
+  pages-deploy:
+    needs: pages-build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -49,3 +55,81 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  sftp:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: "sftp"
+      cancel-in-progress: false
+    steps:
+      - name: Check secrets are available
+        id: secrets
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+        run: |
+          if [ -z "$SFTP_HOST" ]; then
+            echo "::notice::SFTP secrets unavailable (not configured); skipping deploy"
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secrets.outputs.available == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: steps.secrets.outputs.available == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        if: steps.secrets.outputs.available == 'true'
+        run: npm ci
+
+      # Webspace is the public site at the domain root: no /normahl/ base,
+      # and never the password gate (no PUBLIC_PASSWORD_HASH).
+      - name: Build
+        if: steps.secrets.outputs.available == 'true'
+        run: npm run build
+        env:
+          BASE_PATH: /
+
+      - name: Check build
+        if: steps.secrets.outputs.available == 'true'
+        run: node scripts/check-root-build.mjs dist
+
+      - name: SFTP setup
+        if: steps.secrets.outputs.available == 'true'
+        uses: ./.github/actions/sftp-setup
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          known-hosts: ${{ secrets.SFTP_KNOWN_HOSTS }}
+
+      # Mirrors dist/ into the login's start directory, deleting remote files
+      # that are no longer in the build. Dotfiles (.htaccess, .well-known, …)
+      # are excluded so hoster/ACME files on the server are left alone.
+      - name: Upload via SFTP
+        if: steps.secrets.outputs.available == 'true'
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          MIRROR_FLAGS=""
+          [ "$DRY_RUN" = "true" ] && MIRROR_FLAGS="--dry-run"
+          lftp --env-password -u "$SFTP_USERNAME" -p "${SFTP_PORT:-22}" "sftp://$SFTP_HOST" -e "
+            set cmd:fail-exit yes;
+            set sftp:auto-confirm no;
+            set net:max-retries 3;
+            set net:timeout 30;
+            mirror --reverse --delete --verbose --parallel=4 --exclude '(^|/)\.' $MIRROR_FLAGS dist/ ./;
+            bye
+          "

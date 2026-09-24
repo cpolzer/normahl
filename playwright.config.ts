@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Override with PW_PORT to run several suites in parallel (e.g. git worktrees)
+const PORT = process.env.PW_PORT ?? '4321';
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -7,7 +10,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
   projects: [
@@ -16,8 +19,8 @@ export default defineConfig({
     { name: 'mobile',  use: { ...devices['Pixel 5'] } },
   ],
   webServer: {
-    command: 'npm run preview -- --port 4321',
-    url: 'http://localhost:4321/normahl/',
+    command: `npm run preview -- --port ${PORT}`,
+    url: `http://localhost:${PORT}/normahl/`,
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
   },

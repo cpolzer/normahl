@@ -3,9 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
+import { isTbc } from '../lib/feed';
 
 const now = new Date();
-const isTbc = (c: any) => c.tbc || /tbc/i.test(`${c.venue} ${c.city}`);
 
 const upcoming = concerts
   .filter(c => !isTbc(c) && new Date(c.date) >= now)

@@ -18,9 +18,17 @@ description = "Type-check the project"
 run = "npm run check"
 
 [tasks.test]
-description = "Run Playwright e2e responsiveness tests"
+description = "Run Playwright e2e tests"
 run = "npm run test:e2e"
 
 [tasks."test:ui"]
 description = "Run Playwright e2e tests in UI mode"
 run = "npm run test:e2e:ui"
+
+[tasks."test:unit"]
+description = "Run Vitest unit tests"
+run = "npm run test:unit"
+
+[tasks."check:root"]
+description = "Build with base path / into dist-root/ and run safety checks"
+run = "npm run check:root"

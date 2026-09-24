@@ -1,6 +1,6 @@
 # NoRMAhl Website
 
-Official band website for NoRMAhl (Punkrock `78), built with [Astro](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com), deployed to GitHub Pages.
+Official band website for NoRMAhl (Punkrock `78), built with [Astro](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com), deployed via GitHub Actions.
 
 Live at: https://www.normahl.de
 
@@ -29,8 +29,10 @@ mise run dev       # start dev server
 | `mise run build` | Generate image thumbnails, then build the static site to `dist/` |
 | `mise run preview` | Preview the built site locally |
 | `mise run check` | Sync Astro's generated types |
-| `mise run test` | Run Playwright e2e responsiveness tests (desktop/tablet/mobile) |
+| `mise run test` | Run Playwright e2e tests (desktop/tablet/mobile) — always `mise run build` first, it serves `dist/` |
 | `mise run test:ui` | Run Playwright e2e tests in UI mode |
+| `mise run test:unit` | Run Vitest unit tests (`src/**/*.test.ts`) |
+| `mise run check:root` | Build with base path `/` into `dist-root/` and run safety checks |
 
 Adding a new `npm run` script to `package.json`? Add a matching `mise` task in the same change — `package.json` scripts are implementation details invoked by `mise`, not something contributors or CI should call directly.
 
@@ -47,7 +49,7 @@ Pages can be gated behind a simple client-side password check (`src/components/A
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and deploys `dist/` to GitHub Pages.
+Pushes to `main` are built and deployed automatically by GitHub Actions.
 
 ## More docs
 

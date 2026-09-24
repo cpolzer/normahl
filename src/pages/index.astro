@@ -5,9 +5,10 @@ import Footer from '../components/Footer.astro';
 import concerts from '../data/concerts.json';
 import news from '../data/news.json';
 import site from '../data/site.json';
+import { isTbc } from '../lib/feed';
 
 const upcomingConcerts = concerts
-  .filter(c => !c.cancelled && !c.tbc && !/tbc/i.test(`${c.venue} ${c.city}`) && new Date(c.date) >= new Date())
+  .filter(c => !c.cancelled && !isTbc(c) && new Date(c.date) >= new Date())
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   .slice(0, 6);
 
@@ -247,7 +248,7 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
   });
 </script>
 
-<style>
+<style define:vars={{ adlerUrl: `url('${base}images/presse/logo_normahl_adler.jpg')` }}>
   .section-adler {
     position: relative;
   }
@@ -256,7 +257,7 @@ const heroMobileImage = `${base}images/hero/hero-1-mobile.jpg`;
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/normahl/images/presse/logo_normahl_adler.jpg');
+    background-image: var(--adlerUrl);
     background-repeat: no-repeat;
     background-position: center top;
     background-size: 100% auto;
