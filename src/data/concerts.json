@@ -97,13 +97,13 @@
     "_summary": "Weihnachtspogo Chemnitz"
   },
   {
-    "date": "2027-07-03",
-    "venue": "Waschhaus Potsdam",
-    "city": "Potsdam",
-    "ticketUrl": "https://punk.de/index.php?MainCat=15&SubCat=86&ProdID=14908",
+    "date": "2027-07-30",
+    "venue": "Kulturtagen Gut Wöllried",
+    "city": "Würzburg-Rottendorf",
+    "ticketUrl": "https://punk.de/events/wizo-bringt-das-licht-nach-wuerzburg",
     "cancelled": false,
     "_source": "calendar",
-    "_summary": "Normahl mit Wizo und Slime in Potsdam"
+    "_summary": "Normahl in 91802 Meinheim Open-Air"
   },
   {
     "date": "2027-07-31",
@@ -113,14 +113,5 @@
     "cancelled": false,
     "_source": "calendar",
     "_summary": "Normahl mit Wizo und Slime in Potsdam"
-  },
-  {
-    "date": "2027-10-08",
-    "venue": "Halle",
-    "city": "Reichenbach",
-    "ticketUrl": "https://diehalle.de/",
-    "cancelled": false,
-    "_source": "calendar",
-    "_summary": "Normahl in Reichenbach: Halle"
   }
 ]
