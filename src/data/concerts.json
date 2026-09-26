@@ -80,12 +80,12 @@
   },
   {
     "date": "2026-12-12",
-    "venue": "Belinda Benefit",
+    "venue": "Belinda Benefiz",
     "city": "Sulzbach",
     "ticketUrl": "https://www.belinda-discothek.de/kultur-im-kessel-programm",
     "cancelled": false,
     "_source": "calendar",
-    "_summary": "Belinda Benefitz"
+    "_summary": "Belinda Benefiz"
   },
   {
     "date": "2026-12-25",
